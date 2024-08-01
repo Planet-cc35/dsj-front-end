@@ -5,7 +5,7 @@ import NewCard from '../components/NewCard'
 function App() {
   return (
     <>
-    <h1>What up yall</h1>
+    <div className='d-flex m-3'><h1>Do</h1>kusho<h1>Jo</h1></div>
     <NewCard></NewCard>
       <Login />
     </>
