@@ -1,11 +1,14 @@
 import React from 'react';
-import Login from './Login';
+import Login from '../components/Login';
+import NewCard from '../components/NewCard'
 
 function App() {
   return (
-    <div>
+    <>
+    <h1>What up yall</h1>
+    <NewCard></NewCard>
       <Login />
-    </div>
+    </>
   );
 }
 
