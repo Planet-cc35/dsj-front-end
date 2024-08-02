@@ -1,0 +1,17 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+body {
+  background-color: #f7ede2;
+}
+
+.col {
+  position: relative;
+  border: solid 10px #d4a373;
+  background-color: #ffffff;
+  background-image: linear-gradient(
+      rgb(212, 163, 115, 0.15) 10px,
+      transparent 4px
+    ),
+    linear-gradient(to right, rgb(212, 163, 115, 0.15) 10px, transparent 4px);
+  background-size: 100px 200px;
+}
