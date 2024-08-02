@@ -50,9 +50,9 @@ const server = "https://back-end-f8b4.onrender.com/"
  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
   await speechFetch(body);
-  const newCardData = {
-   title,
-   body,
+  const newCardData: speechObject = {
+   card_title: title,
+   card_body: body,
    audio: newAudio,
   };
   setSpeechObject(newCardData)

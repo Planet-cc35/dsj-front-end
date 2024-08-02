@@ -1,12 +1,8 @@
+
 export interface speechObject {
-    title: string,
-    body: string,
-    audio: string
+    card_id?: number | null,
+    card_title: string | null,
+    card_body: string | null,
+    audio: string | null
 }
 
-export interface updateSpeechObject {
-    id: number,
-    title: string,
-    body: string,
-    audio: string
-}
