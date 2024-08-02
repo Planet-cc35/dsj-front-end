@@ -3,10 +3,13 @@ import { useState } from "react";
 import { speechObject } from "./globals.d";
 
 const NewCard: React.FC<any> = ({}) => {
+const server = "http://localhost:3000"
+
  const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
  const [newAudio, setNewAudio] = useState<any | null>(null);
  const [title, setTitle] = useState<string>("");
  const [body, setBody] = useState<string>("");
+ const [btnView, setbtnView] = useState<string>("newCard")
 
  const speechFetch = async (text: string) => {
   try {
@@ -53,24 +56,32 @@ const NewCard: React.FC<any> = ({}) => {
    audio: newAudio,
   };
   setSpeechObject(newCardData)
+  setbtnView("editView")
   console.log(speechObject)
-//   try {
-//    const response = await fetch("https://server", {
-//     method: "POST",
-//     headers: {
-//      "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(newCardData),
-//    });
-//    if (!response.ok) {
-//     throw new Error("Failed to create the new card");
-//    }
-//    const createdCard = await response.json();
-//    setSpeechObject(createdCard);
-//   } catch (error) {
-//    console.error("Error creating card:", error);
-//   }
  };
+
+ const handleSubmitToDb = async () => {
+  try {
+   const response = await fetch(server + "/flashcards", {
+    method: "POST",
+    headers: {
+     "Content-Type": "application/json",
+    },
+    body: JSON.stringify(speechObject),
+   });
+   if (!response.ok) {
+    throw new Error("Failed to create the new card");
+   }
+   const createdCard = await response.json();
+   setSpeechObject(createdCard);
+  } catch (error) {
+   console.error("Error creating card:", error);
+  }
+ }
+
+ function handleReturn():void {
+    setbtnView("newCard")
+ }
 
  const audioTest = () => {
     if (newAudio) {
@@ -113,13 +124,19 @@ const NewCard: React.FC<any> = ({}) => {
        This text will be hidden during study mode.
       </div>
      </div>
-     <button type="submit" className="btn btn-warning mb-3">
+     {(btnView === "newCard") ?  (
+        <button type="submit" className="btn btn-warning mb-3">
       Make a new study card
-     </button>
+     </button>)　: (
+            <>
+            <button className="btn btn-primary mb-3" onClick={audioTest}>Test the audio</button>
+            <button className="btn btn-primary mb-3" onClick={handleSubmitToDb}>Create this card</button>
+            <button className="btn btn-warning mb-3" onClick={handleReturn}>Edit the text</button>
+            </>
+        )
+      }
+   
     </form>
-    {newAudio && (
-        <button className="btn btn-primary" onClick={audioTest}>Test the audio.</button>
-    )}
    </div>
    <div></div>
   </>
