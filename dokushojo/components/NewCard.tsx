@@ -3,7 +3,7 @@ import { useState } from "react";
 import { speechObject } from "./globals.d";
 
 const NewCard: React.FC<any> = ({}) => {
-const server = "http://localhost:3000"
+const server = "https://back-end-f8b4.onrender.com/"
 
  const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
  const [newAudio, setNewAudio] = useState<any | null>(null);
