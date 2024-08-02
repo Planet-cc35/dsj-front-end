@@ -13,8 +13,8 @@ const EditCard: React.FC<any> = ({
  const [updateSpeechObject, setSpeechObject] =
   useState<updateSpeechObject | null>(null);
  const [newAudio, setNewAudio] = useState<any | null>(null);
- const [title, setTitle] = useState<string>("");
- const [body, setBody] = useState<string>("");
+ const [title, setTitle] = useState<string>(cardTitle);
+ const [body, setBody] = useState<string>(cardBody);
  const [btnView, setbtnView] = useState<string>("newCard");
 
  const speechFetch = async (text: string) => {
@@ -54,6 +54,7 @@ const EditCard: React.FC<any> = ({
  }
 
  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
   await speechFetch(body);
   const editCardData = {
    id: cardId,
@@ -69,7 +70,7 @@ const EditCard: React.FC<any> = ({
  const handleSubmitToDb = async () => {
   const id = cardId;
   try {
-   const response = await fetch(server + `/flashcards/:${id}`, {
+   const response = await fetch(server + `/flashcards/${id}`, {
     method: "PUT",
     headers: {
      "Content-Type": "application/json",
@@ -111,7 +112,6 @@ const EditCard: React.FC<any> = ({
        type="text"
        className="form-control"
        aria-describedby="emailHelp"
-       defaultValue={cardTitle}
        value={title}
        onChange={(e) => setTitle(e.target.value)}
       />
@@ -127,7 +127,6 @@ const EditCard: React.FC<any> = ({
        rows={12}
        cols={75}
        value={body}
-       defaultValue={cardBody}
        onChange={(e) => setBody(e.target.value)}></textarea>
       <div className="form-text">
        This text will be hidden during study mode.
