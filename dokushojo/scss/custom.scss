@@ -26,11 +26,11 @@ body {
   align-items: center;
   height: 100%;
   padding: 20px;
-  position: relative; /* Make it a positioning context for absolute children */
+  position: relative; 
 }
 
 .circle-image {
-  height: 1000px;
+  height: 80%;
   width: auto;
 }
 
@@ -53,7 +53,7 @@ body {
   top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px; /* Adjust size as needed */
+  width: 500px; 
   height: auto;
 }
 
@@ -67,7 +67,7 @@ body {
 }
 
 .google-login-button {
-  transform: scale(2); /* Adjust the scale value as needed */
+  transform: scale(2);
   position: absolute;
   top: 55%;
   left: 35%;
