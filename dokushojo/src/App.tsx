@@ -1,10 +1,11 @@
 import React from "react";
 import Login from "../components/Login";
+import StudyMode from "../components/StudyMode";
 
 function App() {
-
   return (
     <>
+    <StudyMode/>
       <div className="container text-center mw-100">
         <div className="row vh-100">
           <div className="col-9 pt-2"></div>

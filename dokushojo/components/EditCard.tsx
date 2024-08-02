@@ -8,7 +8,7 @@ const EditCard: React.FC<any> = ({
  cardAudio,
  cardId,
 }) => {
- const server = "http://localhost:3000";
+ const server = "https://back-end-f8b4.onrender.com/";
 
  const [updateSpeechObject, setSpeechObject] =
   useState<updateSpeechObject | null>(null);
