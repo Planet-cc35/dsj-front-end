@@ -18,7 +18,7 @@ const DeckList: React.FC<any> = () => {
     // Use Effects GET ALL DECKS FROM USER ID
     useEffect(() => {
         async function fetchDecks() {
-            const response = await fetch(`http://localhost:3000/decks/users/${userId}`);
+            const response = await fetch(`https://back-end-f8b4.onrender.com/decks/users/${userId}`);
             const data: Deck[] = await response.json(); // JSON data
             setDecks(data);
         }
@@ -35,7 +35,7 @@ const DeckList: React.FC<any> = () => {
     const handleSaveEdit = async () => {
         if (storeDeckId === null) return;
 
-        const response = await fetch(`http://localhost:3000/decks/${storeDeckId}`, {
+        const response = await fetch(`https://back-end-f8b4.onrender.com/decks/${storeDeckId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'},
@@ -58,7 +58,7 @@ const DeckList: React.FC<any> = () => {
 
     const handleDelete = async (deckId: number) => {
             
-        const response = await fetch(`http://localhost:3000/decks/${deckId}`, {
+        const response = await fetch(`https://back-end-f8b4.onrender.com/decks/${deckId}`, {
             method: 'DELETE',
         });
 
