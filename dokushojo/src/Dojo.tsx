@@ -1,5 +1,6 @@
 import React from "react";
 import NewCard from "../components/NewCard";
+import Login from "../components/Login";
 
 function Dojo() {
   return (
