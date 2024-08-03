@@ -4,9 +4,10 @@ import { speechObject } from "./globals"
 
 interface CardProps {
     studyCards: speechObject[]
+    setView: Function
 }
-const Card: React.FC<CardProps> = ({studyCards}) => {
-    const [view, setview] = useState<string>("study")
+const Card: React.FC<CardProps> = ({studyCards, setView}) => {
+    const [cardView, setCardView] = useState<string>("study")
     const [currentCardIndex, setCurrentCardIndex] = useState<number>(0)
 
     const playAudio = (card: speechObject) => {
@@ -16,8 +17,8 @@ const Card: React.FC<CardProps> = ({studyCards}) => {
         }
     }
 
-    const handleSetView = (text:string) => {
-        setview(text)
+    const handleSetCardView = (text:string) => {
+        setCardView(text)
     }
 
     const handleNextCard = () => {
@@ -28,7 +29,7 @@ const Card: React.FC<CardProps> = ({studyCards}) => {
 
     return (
         <>
-            {(view === "study") ? (
+            {(cardView === "study") ? (
                <>
                <div
                    className="container"
@@ -38,7 +39,7 @@ const Card: React.FC<CardProps> = ({studyCards}) => {
                    Nothing to see here
                </div>
                <button>Delete this card</button>
-               <button onClick={() => handleSetView("edit")}>
+               <button onClick={() => handleSetCardView("edit")}>
                    Edit this card
                </button>
                <button onClick={() => playAudio(currentCard)}>
@@ -57,7 +58,7 @@ const Card: React.FC<CardProps> = ({studyCards}) => {
             </>
     ): (
         <div>
-            <EditCard cardData={currentCard} />
+            <EditCard cardData={currentCard} setCardView={handleSetCardView} />
         </div>
     )}
     </>

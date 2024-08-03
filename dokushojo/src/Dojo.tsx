@@ -38,12 +38,12 @@ const handleSetView = (text:string)=> {
               <button className="btn" onClick={() => handleSetView("newcard")}>Create a new Card</button>
               {(view === "study")? (
                 studyCards ? (
-              <Card studyCards={studyCards} />
+              <Card studyCards={studyCards} setView={handleSetView}/>
             ) : (
               <p>Please be patient as the cards are loading.</p>
             )
           ) : (
-            <NewCard/>
+            <NewCard setView={setView}/>
             )}
             </div>
             <div className="col mx-auto pt-2"></div>

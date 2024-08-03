@@ -2,18 +2,19 @@ import React from "react";
 import { useState } from "react";
 import { speechObject } from "./globals.d";
 
-const EditCard: React.FC<any> = ({
-  cardTitle,
-  cardBody,
-  cardAudio,
-  cardId,
-}) => {
-  const server = "https://dokushojo-backend.onrender.com";
+interface EditCardProps {
+    setCardView: Function,
+    cardData: speechObject 
+    // reaplace cardBody, cardAudio, etc with cardData.card_body, etc.
+}
+
+const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
+  const server = "https://back-end-f8b4.onrender.com/";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
   const [newAudio, setNewAudio] = useState<any | null>(null);
-  const [title, setTitle] = useState<string>(cardTitle);
-  const [body, setBody] = useState<string>(cardBody);
+  const [title, setTitle] = useState<string | undefined>(cardData.card_title);
+  const [body, setBody] = useState<string>(cardData.card_body);
   const [btnView, setbtnView] = useState<string>("newCard");
 
   const speechFetch = async (text: string) => {
@@ -40,12 +41,12 @@ const EditCard: React.FC<any> = ({
     return voices[randomNum];
   }
 
-  function createFetchURL(text: string): string {
+  function createFetchURL(text: string ): string {
     const base: string = "https://api.voicerss.org/";
     const APIkey: string = "?key=82bb9f270cf64d539fe3c0bb3fd8d70d";
     const lang: string = "hl=ja-jp";
     const voice: string = "v=" + randomVoice();
-    const src: string = "src=" + encodeURIComponent(text);
+    const src: any = "src=" + encodeURIComponent(text);
     const fetchURL: string =
       base + APIkey + "&" + lang + "&" + voice + "&" + src;
     console.log("the fetch url is" + fetchURL);
@@ -57,7 +58,7 @@ const EditCard: React.FC<any> = ({
     event.preventDefault();
     await speechFetch(body);
     const editCardData: speechObject = {
-      card_id: cardId,
+      card_id: cardData.card_id,
       card_title: title,
       card_body: body,
       audio: newAudio,
@@ -68,7 +69,7 @@ const EditCard: React.FC<any> = ({
   };
 
   const handleSubmitToDb = async () => {
-    const id = cardId;
+    const id = cardData.card_id;
     try {
       const response = await fetch(server + `/flashcards/${id}`, {
         method: "PUT",
@@ -96,7 +97,7 @@ const EditCard: React.FC<any> = ({
       const audioClip = new Audio(newAudio);
       audioClip.play();
     } else {
-      const oldAudio = new Audio(cardAudio);
+      const oldAudio = new Audio(cardData.audio);
       oldAudio.play();
     }
   };
@@ -154,6 +155,7 @@ const EditCard: React.FC<any> = ({
             </>
           )}
         </form>
+      <button className="btn btn-secondary mb-4" onClick={() => {setCardView("study")}}>Return to study view</button>
       </div>
       <div></div>
     </>

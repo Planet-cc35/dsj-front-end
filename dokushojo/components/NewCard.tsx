@@ -2,7 +2,9 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { speechObject } from "./globals.d";
 
-const NewCard: React.FC<any> = ({}) => {
+interface NewCardProps {setView: Function}
+
+const NewCard: React.FC<NewCardProps> = ({setView}) => {
   const server = "https://back-end-f8b4.onrender.com";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
@@ -159,6 +161,7 @@ const NewCard: React.FC<any> = ({}) => {
         </form>
       </div>
       <div></div>
+      <button className="btn btn-secondary mb-4" onClick={setView("study")}>Return to study view</button>
     </>
   );
 };
