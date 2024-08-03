@@ -3,7 +3,7 @@ import { useState } from "react";
 import { speechObject } from "./globals.d";
 
 const NewCard: React.FC<any> = ({}) => {
-  const server = "https://dokushojo-backend.onrender.com";
+  const server = "https://back-end-f8b4.onrender.com";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
   const [newAudio, setNewAudio] = useState<any | null>(null);
@@ -21,13 +21,26 @@ const NewCard: React.FC<any> = ({}) => {
         throw new Error(`HTTP error! status: ${res.status}`);
       }
       console.log(res);
-      const fetchedAudio = res;
+      const fetchedAudio = await res.json();
       setNewAudio(fetchedAudio.url);
       console.log(newAudio);
     } catch (error) {
       console.error("Error fetching audio:", error);
     }
   };
+
+  useEffect(() => {
+    console.log("New audio updated:", newAudio);
+    if (newAudio) {
+      const newCardData: speechObject = {
+        card_title: title,
+        card_body: body,
+        audio: newAudio,
+      };
+      setSpeechObject(newCardData);
+      setbtnView("editView");
+    }
+  }, [newAudio, title, body]);
 
   function randomVoice(): string {
     const voices: string[] = ["Airi", "Fumi", "Akira"];
@@ -36,8 +49,8 @@ const NewCard: React.FC<any> = ({}) => {
   }
 
   function createFetchURL(text: string): string {
-    const base: string = "test";
-    // const base: string = "https://api.voicerss.org/";
+    // const base: string = "test";
+    const base: string = "https://api.voicerss.org/";
     const APIkey: string = "?key=82bb9f270cf64d539fe3c0bb3fd8d70d";
     const lang: string = "hl=ja-jp";
     const voice: string = "v=" + randomVoice();
@@ -52,16 +65,7 @@ const NewCard: React.FC<any> = ({}) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await speechFetch(body);
-    const newCardData: speechObject = {
-      card_title: title,
-      card_body: body,
-      audio: newAudio,
-    };
-    (() => {
-      setSpeechObject(newCardData);
-    })();
-    setbtnView("editView");
-    console.log(speechObject);
+    console.log("button pressed. Wating for audio.")
   };
 
   const handleSubmitToDb = async () => {

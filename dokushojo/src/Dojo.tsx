@@ -10,8 +10,9 @@ const [view, setView] = useState<string>("study")
 
 useEffect(() => {
   const handleFetchCards = async () => {
+    const server = "https://back-end-f8b4.onrender.com/"
     try {
-    const response = await fetch("https://back-end-f8b4.onrender.com/flashcards")
+    const response = await fetch(server + "flashcards")
     const cardData = await response.json()
     setStudyCards(cardData);
   } catch (error) {
