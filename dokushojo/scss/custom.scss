@@ -1,6 +1,5 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
-@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap");
 
 // LOGIN SCSS
 body {
@@ -26,7 +25,7 @@ body {
   align-items: center;
   height: 100%;
   padding: 20px;
-  position: relative; 
+  position: relative;
 }
 
 .circle-image {
@@ -44,7 +43,7 @@ body {
   top: 45%;
   left: 48%;
   transform: translate(-50%, -50%);
-  width: 1000px; 
+  width: 1000px;
   height: auto;
 }
 
@@ -53,24 +52,24 @@ body {
   top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 500px; 
+  width: 500px;
   height: auto;
 }
 
 .welcome-message {
   position: absolute;
   top: 6%;
-  left: 5%;
+  left: 3%;
   font-weight: 300;
   font-size: 100px;
   color: rgb(89, 145, 6);
 }
 
 .google-login-button {
-  transform: scale(2);
+  transform: scale(1.5);
   position: absolute;
-  top: 55%;
-  left: 35%;
+  top: 60%;
+  left: 28%;
 }
 
 @keyframes spin {
@@ -81,7 +80,6 @@ body {
     transform: rotate(360deg);
   }
 }
-
 
 // DOJO SCSS
 
@@ -109,7 +107,6 @@ body {
   transition: transform 1s ease-in-out;
 }
 
-
 .center-left-door {
   width: 29%;
   left: 21%;
@@ -122,7 +119,6 @@ body {
   left: 50%;
   animation: slide-right 2s 1s forwards;
 }
-
 
 @keyframes slide-left {
   from {
@@ -140,4 +136,8 @@ body {
   to {
     transform: translateX(100%);
   }
+}
+
+.btn {
+  margin: 0px 5px 0px 5px;
 }
