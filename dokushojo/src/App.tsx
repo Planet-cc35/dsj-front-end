@@ -12,9 +12,21 @@ function App() {
       <div className="row vh-100">
         {!isDojoPage && (
           <div className="col-9 pt-2">
-            <img src="circle copiar.svg" className="circle-image spin-image" alt="Circle" />
-            <img src="Dokushojo.svg" className="circle-image center-image" alt="Dokushojo" />
-            <img src="Dokushojo-title.svg" className="circle-title center-title" alt="Dokushojo" />
+            <img
+              src="circle copiar.svg"
+              className="circle-image spin-image"
+              alt="Circle"
+            />
+            <img
+              src="Dokushojo.svg"
+              className="circle-image center-image"
+              alt="Dokushojo"
+            />
+            <img
+              src="Dokushojo-title.svg"
+              className="circle-title center-title"
+              alt="Dokushojo"
+            />
           </div>
         )}
         <div className="col mx-auto pt-2">
@@ -24,9 +36,9 @@ function App() {
             </Routes>
           </div>
         </div>
-            <Routes>
-            <Route path="/dojo" element={<Dojo />} />
-            </Routes>
+        <Routes>
+          <Route path="/dojo" element={<Dojo />} />
+        </Routes>
       </div>
     </div>
   );
