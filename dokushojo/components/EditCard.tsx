@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { updateSpeechObject } from "./globals.d";
+import { speechObject } from "./globals.d";
 
 const EditCard: React.FC<any> = ({
  cardTitle,
@@ -8,10 +8,11 @@ const EditCard: React.FC<any> = ({
  cardAudio,
  cardId,
 }) => {
+    
  const server = "https://back-end-f8b4.onrender.com/";
 
- const [updateSpeechObject, setSpeechObject] =
-  useState<updateSpeechObject | null>(null);
+ const [speechObject, setSpeechObject] =
+  useState<speechObject | null>(null);
  const [newAudio, setNewAudio] = useState<any | null>(null);
  const [title, setTitle] = useState<string>(cardTitle);
  const [body, setBody] = useState<string>(cardBody);
@@ -56,15 +57,15 @@ const EditCard: React.FC<any> = ({
  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
   await speechFetch(body);
-  const editCardData = {
-   id: cardId,
-   title,
-   body,
+  const editCardData: speechObject = {
+   card_id: cardId,
+   card_title: title,
+   card_body: body,
    audio: newAudio,
   };
   setSpeechObject(editCardData);
   setbtnView("editView");
-  console.log(updateSpeechObject);
+  console.log(speechObject);
  };
 
  const handleSubmitToDb = async () => {
@@ -75,7 +76,7 @@ const EditCard: React.FC<any> = ({
     headers: {
      "Content-Type": "application/json",
     },
-    body: JSON.stringify(updateSpeechObject),
+    body: JSON.stringify(speechObject),
    });
    if (!response.ok) {
     throw new Error("Failed to create the new card");

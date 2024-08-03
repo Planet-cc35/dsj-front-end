@@ -11,7 +11,7 @@ function Dojo() {
           <div className="row vh-100">
             <div className="col pt-2"></div>
             <div className="col-7 pt-2">
-              <h1>What up yall</h1>
+              <h1>Welcome to the Dojo.</h1>
               <NewCard></NewCard>
             </div>
             <div className="col mx-auto pt-2"></div>
