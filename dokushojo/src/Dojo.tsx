@@ -1,10 +1,12 @@
 import React from "react";
 import NewCard from "../components/NewCard";
 import { useState, useEffect } from "react";
+import Card from "../components/Card";
+import { speechObject } from "../components/globals";
 
-function Dojo() {
-const [studyCards, setStudyCards] = useState<any [] | null>(null)
-const [view, setView] = useState<string>("newCard")
+const Dojo: React.FC = () => {
+const [studyCards, setStudyCards] = useState<speechObject[] | null>(null)
+const [view, setView] = useState<string>("study")
 
 useEffect(() => {
   const handleFetchCards = async () => {
@@ -19,7 +21,10 @@ useEffect(() => {
 handleFetchCards()
 }, [])
 
+const handleSetView = (text:string)=> {
+  setView(text)
 }
+
   return (
     <div className="shoji-container">
       <div className="shoji-door center-left-door"></div>
@@ -29,7 +34,16 @@ handleFetchCards()
             <div className="col pt-2"></div>
             <div className="col-7 pt-2">
               <h1>Welcome to the Dojo</h1>
-              <Card studyCards={studyCards}></Card>
+              <button className="btn" onClick={() => handleSetView("newcard")}>Create a new Card</button>
+              {(view === "study")? (
+                studyCards ? (
+              <Card studyCards={studyCards} />
+            ) : (
+              <p>Please be patient as the cards are loading.</p>
+            )
+          ) : (
+            <NewCard/>
+            )}
             </div>
             <div className="col mx-auto pt-2"></div>
           </div>
