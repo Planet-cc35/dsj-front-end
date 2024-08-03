@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const clientId = "11471929898-7c74bgss3h1c1f4q13bas5isbo74edfs.apps.googleusercontent.com";
 
-function Login() {
+function Login( { } ) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [information, setInformation] = useState<any>(null);
   const navigate = useNavigate();
