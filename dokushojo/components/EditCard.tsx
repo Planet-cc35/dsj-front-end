@@ -5,7 +5,6 @@ import { speechObject } from "./globals.d";
 interface EditCardProps {
     setCardView: Function,
     cardData: speechObject 
-    // reaplace cardBody, cardAudio, etc with cardData.card_body, etc.
 }
 
 const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
@@ -86,6 +85,7 @@ const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
     } catch (error) {
       console.error("Error creating card:", error);
     }
+    setCardView("study")
   };
 
   function handleReturn(): void {

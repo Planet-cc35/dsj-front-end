@@ -161,7 +161,7 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
         </form>
       </div>
       <div></div>
-      <button className="btn btn-secondary mb-4" onClick={setView("study")}>Return to study view</button>
+      <button className="btn btn-secondary mb-4" onClick={()=> {setView("study")}}>Return to study view</button>
     </>
   );
 };

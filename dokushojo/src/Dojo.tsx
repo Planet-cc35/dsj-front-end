@@ -38,7 +38,7 @@ const handleSetView = (text:string)=> {
               <button className="btn" onClick={() => handleSetView("newcard")}>Create a new Card</button>
               {(view === "study")? (
                 studyCards ? (
-              <Card studyCards={studyCards} setView={handleSetView}/>
+              <Card studyCards={studyCards} />
             ) : (
               <p>Please be patient as the cards are loading.</p>
             )
