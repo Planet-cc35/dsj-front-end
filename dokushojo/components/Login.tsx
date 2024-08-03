@@ -19,10 +19,11 @@ function Login( { } ) {
     const decoded = jwtDecode(credentialResponse?.credential);
     setInformation(decoded);
     setIsLoggedIn(true);
-    navigate("/dojo");
+    navigate("/dojo", { state: { user: decoded } });
     console.log(decoded);
     console.log(credentialResponse);
   };
+  
 
   const handleError = () => {
     console.log('Login Failed');
