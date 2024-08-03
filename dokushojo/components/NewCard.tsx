@@ -2,10 +2,12 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { speechObject } from "./globals.d";
 
-interface NewCardProps {setView: Function}
+interface NewCardProps {
+  setView: Function;
+}
 
-const NewCard: React.FC<NewCardProps> = ({setView}) => {
-  const server = "https://back-end-f8b4.onrender.com";
+const NewCard: React.FC<NewCardProps> = ({ setView }) => {
+  const server = "https://dokushojo-backend.onrender.com";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
   const [newAudio, setNewAudio] = useState<any | null>(null);
@@ -13,23 +15,24 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
   const [body, setBody] = useState<string>("");
   const [btnView, setbtnView] = useState<string>("newCard");
 
-  const speechFetch = async (text: string) => {
-    try {
-      const res = await fetch(createFetchURL(text), {
-        method: "GET",
-      });
+  // const speechFetch = async (text: string) => {
+  //   try {
+  //     const res = await fetch(createFetchURL(text), {
+  //       method: "GET",
+  //     });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      console.log(res);
-      const fetchedAudio = await res.json();
-      setNewAudio(fetchedAudio.url);
-      console.log(newAudio);
-    } catch (error) {
-      console.error("Error fetching audio:", error);
-    }
-  };
+  //     if (!res.ok) {
+  //       throw new Error(`HTTP error! status: ${res.status}`);
+  //     }
+
+  //     const fetchedAudio = await res.json();
+  //     console.log(fetchedAudio);
+  //     setNewAudio(fetchedAudio.url);
+  //     console.log(newAudio);
+  //   } catch (error) {
+  //     console.error("Error fetching audio:", error);
+  //   }
+  // };
 
   useEffect(() => {
     console.log("New audio updated:", newAudio);
@@ -51,7 +54,7 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
   }
 
   function createFetchURL(text: string): string {
-    // const base: string = "test";
+    //  const base: string = "test";
     const base: string = "https://api.voicerss.org/";
     const APIkey: string = "?key=82bb9f270cf64d539fe3c0bb3fd8d70d";
     const lang: string = "hl=ja-jp";
@@ -60,14 +63,15 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
     const fetchURL: string =
       base + APIkey + "&" + lang + "&" + voice + "&" + src;
     console.log(fetchURL);
+    setNewAudio(fetchURL); //EDITED
 
     return fetchURL;
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await speechFetch(body);
-    console.log("button pressed. Wating for audio.")
+    await createFetchURL(body); // EDITED
+    console.log("button pressed. Wating for audio.");
   };
 
   const handleSubmitToDb = async () => {
@@ -161,7 +165,14 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
         </form>
       </div>
       <div></div>
-      <button className="btn btn-secondary mb-4" onClick={()=> {setView("study")}}>Return to study view</button>
+      <button
+        className="btn btn-secondary mb-4"
+        onClick={() => {
+          setView("study");
+        }}
+      >
+        Return to study view
+      </button>
     </>
   );
 };

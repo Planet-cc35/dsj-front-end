@@ -3,12 +3,12 @@ import { useState } from "react";
 import { speechObject } from "./globals.d";
 
 interface EditCardProps {
-    setCardView: Function,
-    cardData: speechObject 
+  setCardView: Function;
+  cardData: speechObject;
 }
 
-const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
-  const server = "https://back-end-f8b4.onrender.com";
+const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
+  const server = "https://dokushojo-backend.onrender.com";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
   const [newAudio, setNewAudio] = useState<any | null>(null);
@@ -40,7 +40,7 @@ const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
     return voices[randomNum];
   }
 
-  function createFetchURL(text: string ): string {
+  function createFetchURL(text: string): string {
     const base: string = "https://api.voicerss.org/";
     const APIkey: string = "?key=82bb9f270cf64d539fe3c0bb3fd8d70d";
     const lang: string = "hl=ja-jp";
@@ -85,7 +85,7 @@ const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
     } catch (error) {
       console.error("Error creating card:", error);
     }
-    setCardView("study")
+    setCardView("study");
   };
 
   function handleReturn(): void {
@@ -155,7 +155,14 @@ const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
             </>
           )}
         </form>
-      <button className="btn btn-secondary mb-4" onClick={() => {setCardView("study")}}>Return to study view</button>
+        <button
+          className="btn btn-secondary mb-4"
+          onClick={() => {
+            setCardView("study");
+          }}
+        >
+          Return to study view
+        </button>
       </div>
       <div></div>
     </>
