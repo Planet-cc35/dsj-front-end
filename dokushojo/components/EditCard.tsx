@@ -8,7 +8,7 @@ interface EditCardProps {
 }
 
 const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
-  const server = "https://back-end-f8b4.onrender.com/";
+  const server = "https://back-end-f8b4.onrender.com";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
   const [newAudio, setNewAudio] = useState<any | null>(null);
