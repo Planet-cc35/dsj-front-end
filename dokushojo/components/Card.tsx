@@ -52,7 +52,8 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
         }
       );
       if (response.ok) {
-        window.location.reload();
+        handleFetchCards();
+
         const updatedCards = cards.filter(
           (_, index) => index !== currentCardIndex
         );
@@ -65,6 +66,17 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
       }
     } catch (error) {
       console.error("Error deleting the card:", error);
+    }
+  };
+
+  const handleFetchCards = async () => {
+    const server = "https://dokushojo-backend.onrender.com/";
+    try {
+      const response = await fetch(server + "flashcards");
+      const cardData = await response.json();
+      setCards(cardData);
+    } catch (error) {
+      console.error("Error fetching the cards. Please be patient.");
     }
   };
 

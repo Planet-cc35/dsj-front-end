@@ -67,7 +67,6 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
       }
       const createdCard = await response.json();
       setSpeechObject(createdCard);
-      window.location.reload();
     } catch (error) {
       console.error("Error creating card:", error);
     }
