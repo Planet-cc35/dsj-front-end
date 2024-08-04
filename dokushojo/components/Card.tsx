@@ -59,7 +59,7 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
         setCurrentCardIndex((lastIndex) =>
           Math.min(lastIndex, updatedCards.length - 1)
         );
-        history.go(0);
+        setCardView("study");
       } else {
         console.error("Failed to delete the card.");
       }
