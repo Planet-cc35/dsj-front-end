@@ -57,7 +57,10 @@ const Dojo: React.FC = () => {
                 )}
               </div>
               {/* USER PROFILE INFORMATION */}
-              <button className="btn" onClick={() => handleSetView("newcard")}>
+              <button
+                className="btn new-card"
+                onClick={() => handleSetView("newcard")}
+              >
                 Create a new Card
               </button>
               {view === "study" ? (

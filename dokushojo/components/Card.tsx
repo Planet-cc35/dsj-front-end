@@ -23,6 +23,13 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
 
   const handleSetCardView = (text: string) => {
     setCardView(text);
+    if (text === "edit") {
+      const newCardBtn: HTMLElement = document.getElementsByClassName(
+        "new-card"
+      )[0] as HTMLElement;
+
+      newCardBtn.style.display = "none";
+    }
     console.log(currentCard.card_id);
   };
 
