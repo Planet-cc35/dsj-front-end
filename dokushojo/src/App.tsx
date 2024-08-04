@@ -7,7 +7,7 @@ function App() {
   const isDojoPage = location.pathname === "/dojo";
 
   return (
-    <div className="container text-center mw-100" data-bs-spy="scroll">
+    <div className="container text-center mw-100 ">
       <div className="row vh-100">
         {!isDojoPage && (
           <div className="col-9 pt-2">

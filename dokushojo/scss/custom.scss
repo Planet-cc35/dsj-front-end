@@ -4,7 +4,8 @@
 // LOGIN SCSS
 body {
   background-color: #f7ede2;
-  overflow: auto;
+  height: 100%;
+  position: relative;
 }
 
 .col {
@@ -16,7 +17,7 @@ body {
       transparent 4px
     ),
     linear-gradient(to right, rgba(212, 163, 115, 0.15) 10px, transparent 4px);
-  background-size: 10vw 20vh;
+  background-size: 100px 200px;
 }
 
 .col-9 {

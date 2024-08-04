@@ -82,6 +82,7 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
       }
       const createdCard = await response.json();
       setSpeechObject(createdCard);
+      setView("study");
     } catch (error) {
       console.error("Error creating card:", error);
     }
@@ -137,21 +138,27 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
             </div>
           </div>
           {btnView === "newCard" ? (
-            <button type="submit" className="btn btn-warning mb-3">
+            <button type="submit" className="btn btn-warning btn-lg mb-3">
               Make a new study card
             </button>
           ) : (
             <>
-              <button className="btn btn-primary mb-3" onClick={audioTest}>
+              <button
+                className="btn btn-primary btn-lg mb-3"
+                onClick={audioTest}
+              >
                 Test the audio
               </button>
               <button
-                className="btn btn-primary mb-3"
+                className="btn btn-primary btn-lg mb-3"
                 onClick={handleSubmitToDb}
               >
                 Create this card
               </button>
-              <button className="btn btn-warning mb-3" onClick={handleReturn}>
+              <button
+                className="btn btn-warning btn-lg mb-3"
+                onClick={handleReturn}
+              >
                 Edit the text
               </button>
             </>
@@ -160,7 +167,7 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
       </div>
       <div></div>
       <button
-        className="btn btn-secondary mb-4"
+        className="btn btn-secondary btn-lg mb-4"
         onClick={() => {
           setView("study");
         }}
