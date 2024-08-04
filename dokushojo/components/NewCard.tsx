@@ -54,7 +54,6 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
   }
 
   function createFetchURL(text: string): string {
-    //  const base: string = "test";
     const base: string = "https://api.voicerss.org/";
     const APIkey: string = "?key=82bb9f270cf64d539fe3c0bb3fd8d70d";
     const lang: string = "hl=ja-jp";
@@ -62,7 +61,6 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
     const src: string = "src=" + encodeURIComponent(text);
     const fetchURL: string =
       base + APIkey + "&" + lang + "&" + voice + "&" + src;
-    console.log(fetchURL);
     setNewAudio(fetchURL); //EDITED
 
     return fetchURL;

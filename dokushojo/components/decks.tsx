@@ -37,7 +37,7 @@ const DeckList: React.FC<any> = () => {
     if (storeDeckId === null) return;
 
     const response = await fetch(
-      `https://back-end-f8b4.onrender.com/decks/${storeDeckId}`,
+      `https://dokushojo-backend.onrender.com/decks/${storeDeckId}`,
       {
         method: "PUT",
         headers: {
@@ -64,7 +64,7 @@ const DeckList: React.FC<any> = () => {
 
   const handleDelete = async (deckId: number) => {
     const response = await fetch(
-      `https://back-end-f8b4.onrender.com/decks/${deckId}`,
+      `https://dokushojo-backend.onrender.com/decks/${deckId}`,
       {
         method: "DELETE",
       }

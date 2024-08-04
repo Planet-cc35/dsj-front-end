@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { speechObject } from "./globals.d";
 
@@ -16,23 +16,23 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
   const [body, setBody] = useState<string>(cardData.card_body);
   const [btnView, setbtnView] = useState<string>("newCard");
 
-  const speechFetch = async (text: string) => {
-    try {
-      const res = await fetch(createFetchURL(text), {
-        method: "GET",
-      });
+  //   const speechFetch = async (text: string) => {
+  //     try {
+  //       const res = await fetch(createFetchURL(text), {
+  //         method: "GET",
+  //       });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      const fetchedAudio = await res;
-      console.log(fetchedAudio.url);
-      setNewAudio(fetchedAudio.url);
-      console.log(newAudio);
-    } catch (error) {
-      console.error("Error fetching audio:", error);
-    }
-  };
+  //       if (!res.ok) {
+  //         throw new Error(`HTTP error! status: ${res.status}`);
+  //       }
+  //       const fetchedAudio = await res;
+  //       console.log(fetchedAudio.url);
+  //       setNewAudio(fetchedAudio.url);
+  //       console.log(newAudio);
+  //     } catch (error) {
+  //       console.error("Error fetching audio:", error);
+  //     }
+  //   };
 
   function randomVoice(): string {
     const voices: string[] = ["Airi", "Fumi", "Akira"];
@@ -45,26 +45,31 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
     const APIkey: string = "?key=82bb9f270cf64d539fe3c0bb3fd8d70d";
     const lang: string = "hl=ja-jp";
     const voice: string = "v=" + randomVoice();
-    const src: any = "src=" + encodeURIComponent(text);
+    const src: string = "src=" + encodeURIComponent(text);
     const fetchURL: string =
       base + APIkey + "&" + lang + "&" + voice + "&" + src;
     console.log("the fetch url is" + fetchURL);
+    setNewAudio(fetchURL); //EDITED
 
     return fetchURL;
   }
 
+  useEffect(() => {
+    console.log("New audio updated:", newAudio);
+    if (newAudio) {
+      const editCardData: speechObject = {
+        card_title: title,
+        card_body: body,
+        audio: newAudio,
+      };
+      setSpeechObject(editCardData);
+      setbtnView("editView");
+    }
+  }, [newAudio, title, body]);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await speechFetch(body);
-    const editCardData: speechObject = {
-      card_id: cardData.card_id,
-      card_title: title,
-      card_body: body,
-      audio: newAudio,
-    };
-    setSpeechObject(editCardData);
-    setbtnView("editView");
-    console.log(speechObject);
+    await createFetchURL(body); // EDITED
   };
 
   const handleSubmitToDb = async () => {
@@ -82,6 +87,8 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
       }
       const createdCard = await response.json();
       setSpeechObject(createdCard);
+      console.log(speechObject);
+      window.location.reload();
     } catch (error) {
       console.error("Error creating card:", error);
     }

@@ -1,18 +1,14 @@
 import { useState } from "react";
 import EditCard from "./EditCard";
-import { deckObject, speechObject, userObject } from "./globals";
+import { speechObject } from "./globals";
 
 interface CardProps {
   studyCards: speechObject[];
-  deck: deckObject[];
-  user: userObject[];
 }
-const Card: React.FC<CardProps> = ({ studyCards, deck, user }) => {
+const Card: React.FC<CardProps> = ({ studyCards }) => {
   const [cardView, setCardView] = useState<string>("study");
   const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
   const [cards, setCards] = useState<speechObject[]>(studyCards);
-  const [deckId, setDeckId] = useState<deckObject[]>(deck);
-  const [userId, setUserId] = useState<userObject[]>(user);
 
   const playAudio = async (card: speechObject) => {
     const audio = new Audio(card.audio); // Create an Audio object with the URL
@@ -27,12 +23,12 @@ const Card: React.FC<CardProps> = ({ studyCards, deck, user }) => {
 
   const handleSetCardView = (text: string) => {
     setCardView(text);
+    console.log(currentCard.card_id);
   };
 
   const handleNextCard = () => {
     setCurrentCardIndex((prevIndex) => (prevIndex + 1) % studyCards.length);
     console.log(currentCardIndex);
-    console.log(deckId);
     console.log(cards);
   };
 
@@ -43,6 +39,8 @@ const Card: React.FC<CardProps> = ({ studyCards, deck, user }) => {
   const handleDeleteCard = async () => {
     const currentCard = cards[currentCardIndex];
     console.log(currentCard);
+    console.log(currentCard.card_id);
+    console.log;
     try {
       const response = await fetch(
         `https://dokushojo-backend.onrender.com/flashcards/${currentCard.card_id}`,
@@ -51,6 +49,7 @@ const Card: React.FC<CardProps> = ({ studyCards, deck, user }) => {
         }
       );
       if (response.ok) {
+        window.location.reload();
         const updatedCards = cards.filter(
           (_, index) => index !== currentCardIndex
         );
@@ -120,7 +119,7 @@ const Card: React.FC<CardProps> = ({ studyCards, deck, user }) => {
                   return (
                     <div
                       key={index}
-                      className="card start-25 my-3 next-card"
+                      className="card start-25 w-25 m-3 next-card"
                       onClick={() => handlePreviewCardClick(index)}
                     >
                       Nothing to see here either. {card.card_body} {index}
