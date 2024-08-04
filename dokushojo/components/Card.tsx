@@ -11,11 +11,10 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
   const [cards, setCards] = useState<speechObject[]>(studyCards);
 
   const playAudio = async (card: speechObject) => {
-    const audio = new Audio(card.audio); // Create an Audio object with the URL
-    console.log(audio);
+    const audio = new Audio(card.audio);
     try {
-      await audio.load(); // Load the audio data asynchronously
-      await audio.play(); // Play the audio
+      await audio.load();
+      await audio.play();
     } catch (error) {
       console.error("Error playing audio:", error);
     }
@@ -36,8 +35,6 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
     setCurrentCardIndex((prevIndex) => (prevIndex + 1) % studyCards.length);
     const currentCardIndexHardCode = studyCards[currentCardIndex + 1];
     playAudio(currentCardIndexHardCode);
-    console.log(currentCardIndex);
-    console.log(cards);
   };
 
   const handlePreviewCardClick = (index: number) => {
@@ -46,9 +43,7 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
 
   const handleDeleteCard = async () => {
     const currentCard = cards[currentCardIndex];
-    console.log(currentCard);
-    console.log(currentCard.card_id);
-    console.log;
+
     try {
       const response = await fetch(
         `https://dokushojo-backend.onrender.com/flashcards/${currentCard.card_id}`,

@@ -36,7 +36,7 @@ const Dojo: React.FC = () => {
         <div className="container text-center mw-100">
           <div className="row vh-100">
             <div className="col pt-2"></div>
-            <div className="col-7 pt-2">
+            <div className="col-7 pt-2 ">
               <h1>Welcome to the Dojo</h1>
               {/* USER PROFILE INFORMATION */}
               <div className="profile-container">
@@ -49,10 +49,6 @@ const Dojo: React.FC = () => {
                         alt="Profile"
                       />
                     )}
-                    <div className="profile-info">
-                      <h2>{user.name}</h2>
-                      <p>{user.email}</p>
-                    </div>
                   </>
                 )}
               </div>

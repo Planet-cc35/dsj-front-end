@@ -1,5 +1,3 @@
-import React from "react";
-import { useState } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Login from "../components/Login";
 import Dojo from "./Dojo";
@@ -9,7 +7,7 @@ function App() {
   const isDojoPage = location.pathname === "/dojo";
 
   return (
-    <div className="container text-center mw-100">
+    <div className="container text-center mw-100" data-bs-spy="scroll">
       <div className="row vh-100">
         {!isDojoPage && (
           <div className="col-9 pt-2">

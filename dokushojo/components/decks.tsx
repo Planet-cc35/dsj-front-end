@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { speechObject } from "./globals.d";
 
 interface Deck {
   deck_id: number;

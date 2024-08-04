@@ -10,7 +10,7 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
   const server = "https://dokushojo-backend.onrender.com";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
-  const [newAudio, setNewAudio] = useState<any | null>(null);
+  const [newAudio, setNewAudio] = useState<string | null>(null);
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
   const [btnView, setbtnView] = useState<string>("newCard");
@@ -26,16 +26,13 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
   //     }
 
   //     const fetchedAudio = await res.json();
-  //     console.log(fetchedAudio);
   //     setNewAudio(fetchedAudio.url);
-  //     console.log(newAudio);
   //   } catch (error) {
   //     console.error("Error fetching audio:", error);
   //   }
   // };
 
   useEffect(() => {
-    console.log("New audio updated:", newAudio);
     if (newAudio) {
       const newCardData: speechObject = {
         card_title: title,
@@ -69,7 +66,6 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await createFetchURL(body); // EDITED
-    console.log("button pressed. Wating for audio.");
   };
 
   const handleSubmitToDb = async () => {

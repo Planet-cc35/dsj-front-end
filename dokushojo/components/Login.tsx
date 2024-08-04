@@ -28,6 +28,7 @@ function Login({}) {
     handleGetId();
     console.log(userId);
   }, []);
+  useEffect(() => {}, []);
 
   useEffect(() => {}, [userObject]);
 
@@ -41,10 +42,24 @@ function Login({}) {
     setInformation(decoded);
     setIsLoggedIn(true);
     navigate("/dojo", { state: { user: decoded } });
+
+    // const email = decoded.email;
+
+    // for (const user of userId) {
+    //   console.log(decoded.email);
+    //   if (user.email_address === decoded.email) {
+    //     setUserObject(user.user_id);
+    //     console.log(userObject);
+    //     navigate("/dojo", { state: { user: decoded } });
+    //   } else if (user.email_address !== decoded.email) {
+    //     setNewUser({ email_address: email });
+    //     handleCreateNewUser(newUser);
+    //   }
+    // }
+
     console.log(decoded);
     console.log(credentialResponse);
   };
-  
 
   const handleError = () => {
     console.log("Login Failed");
@@ -67,24 +82,24 @@ function Login({}) {
     }
   };
 
-  const handleCreateNewUser = async (user: string) => {
-    try {
-      const response = await fetch(server + "/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to create the new user");
-      }
-      setUserObject(user.user_id);
-      navigate("/dojo");
-    } catch (error) {
-      console.error("Error creating user:", error);
-    }
-  };
+  // const handleCreateNewUser = async (user: string) => {
+  //   try {
+  //     const response = await fetch(server + "/users", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(user),
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Failed to create the new user");
+  //     }
+  //     setUserObject(user.user_id);
+  //     navigate("/dojo", { state: { user: information } });
+  //   } catch (error) {
+  //     console.error("Error creating user:", error);
+  //   }
+  // };
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
