@@ -1,6 +1,6 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=Outfit:wght@100..900&display=swap");
 // LOGIN SCSS
 body {
   background-color: #f7ede2;
@@ -143,13 +143,34 @@ body {
   margin: 0px 5px 0px 5px;
 }
 
-.card,
-.next-card {
+//DOJO USER INFORMATION
+.profile-container {
   display: flex;
+  width: 20%;
+  background-color: #ffffff;
+  padding: 5px;
+  border: 1px solid rgb(89, 145, 6);
+  border-radius: 5px;
+  font-family: "Outfit", sans-serif;
+}
+
+.profile-container img {
+  border: 1px solid rgb(89, 145, 6);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background-color: #00c07d;
-  height: 10vh;
-  font-size: 24px;
+  color: rgb(89, 145, 6);
+}
+
+.profile-container h2,
+.profile-container p {
+  margin: 0;
+  font-size: 15px;
 }

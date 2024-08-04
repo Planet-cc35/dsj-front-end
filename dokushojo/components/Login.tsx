@@ -40,23 +40,11 @@ function Login({}) {
     const decoded = jwtDecode(credentialResponse?.credential);
     setInformation(decoded);
     setIsLoggedIn(true);
-    const email = decoded.email;
-
-    for (const user of userId) {
-      console.log(decoded.email);
-      if (user.email_address === decoded.email) {
-        setUserObject(user.user_id);
-        console.log(userObject);
-        navigate("/dojo");
-      } else {
-        setNewUser({ email_address: email });
-        handleCreateNewUser(newUser);
-      }
-    }
-
+    navigate("/dojo", { state: { user: decoded } });
     console.log(decoded);
     console.log(credentialResponse);
   };
+  
 
   const handleError = () => {
     console.log("Login Failed");
