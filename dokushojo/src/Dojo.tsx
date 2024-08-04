@@ -23,7 +23,7 @@ const Dojo: React.FC = () => {
       }
     };
     handleFetchCards();
-  }, []);
+  }, [studyCards]);
 
   const handleSetView = (text: string) => {
     setView(text);
