@@ -115,7 +115,7 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               Show me the answer
             </button>
             <div className="next-cards-preview">
-              {studyCards.map((card, index) => {
+              {studyCards.map((_, index) => {
                 if (index !== currentCardIndex) {
                   return (
                     <div
