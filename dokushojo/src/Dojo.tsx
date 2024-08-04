@@ -1,12 +1,16 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import NewCard from "../components/NewCard";
 import { useState, useEffect } from "react";
 import Card from "../components/Card";
 import { speechObject } from "../components/globals";
 
 const Dojo: React.FC = () => {
+const location = useLocation();
+const { user } = location.state || {}; 
 const [studyCards, setStudyCards] = useState<speechObject[] | null>(null)
 const [view, setView] = useState<string>("study")
+
 
 useEffect(() => {
   const handleFetchCards = async () => {
@@ -35,6 +39,21 @@ const handleSetView = (text:string)=> {
             <div className="col pt-2"></div>
             <div className="col-7 pt-2">
               <h1>Welcome to the Dojo</h1>
+              {/* USER PROFILE INFORMATION */}
+              <div className="profile-container">
+                {user && (
+                  <>
+                    {user.picture && (
+                      <img className="profile" src={user.picture} alt="Profile" />
+                    )}
+                    <div className="profile-info">
+                      <h2>{user.name}</h2>
+                      <p>{user.email}</p>
+                    </div>
+                  </>
+                )}
+              </div>
+              {/* USER PROFILE INFORMATION */}
               <button className="btn" onClick={() => handleSetView("newcard")}>Create a new Card</button>
               {(view === "study")? (
                 studyCards ? (
