@@ -52,8 +52,6 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
         }
       );
       if (response.ok) {
-        handleFetchCards();
-
         const updatedCards = cards.filter(
           (_, index) => index !== currentCardIndex
         );
@@ -61,22 +59,12 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
         setCurrentCardIndex((lastIndex) =>
           Math.min(lastIndex, updatedCards.length - 1)
         );
+        history.go(0);
       } else {
         console.error("Failed to delete the card.");
       }
     } catch (error) {
       console.error("Error deleting the card:", error);
-    }
-  };
-
-  const handleFetchCards = async () => {
-    const server = "https://dokushojo-backend.onrender.com/";
-    try {
-      const response = await fetch(server + "flashcards");
-      const cardData = await response.json();
-      setCards(cardData);
-    } catch (error) {
-      console.error("Error fetching the cards. Please be patient.");
     }
   };
 
