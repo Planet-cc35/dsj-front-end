@@ -120,7 +120,7 @@ const Card: React.FC<CardProps> = ({ studyCards, deck, user }) => {
                   return (
                     <div
                       key={index}
-                      className="card w-50 start-50 translate-middle-x my-3 next-card"
+                      className="card start-25 my-3 next-card"
                       onClick={() => handlePreviewCardClick(index)}
                     >
                       Nothing to see here either. {card.card_body} {index}
@@ -144,6 +144,9 @@ const Card: React.FC<CardProps> = ({ studyCards, deck, user }) => {
             <div className="card w-50 start-50 translate-middle-x my-3">
               {currentCard.card_body}
             </div>
+            <figure>
+              <audio controls src={currentCard.audio}></audio>
+            </figure>
             <button
               className="btn btn-primary btn-lg m-4"
               onClick={() => handleSetCardView("study")}

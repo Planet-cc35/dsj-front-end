@@ -6,29 +6,28 @@ import Card from "../components/Card";
 import { speechObject } from "../components/globals";
 
 const Dojo: React.FC = () => {
-const location = useLocation();
-const { user } = location.state || {}; 
-const [studyCards, setStudyCards] = useState<speechObject[] | null>(null)
-const [view, setView] = useState<string>("study")
+  const location = useLocation();
+  const { user } = location.state || {};
+  const [studyCards, setStudyCards] = useState<speechObject[] | null>(null);
+  const [view, setView] = useState<string>("study");
 
+  useEffect(() => {
+    const handleFetchCards = async () => {
+      const server = "https://dokushojo-backend.onrender.com/";
+      try {
+        const response = await fetch(server + "flashcards");
+        const cardData = await response.json();
+        setStudyCards(cardData);
+      } catch (error) {
+        console.error("Error fetching the cards. Please be patient.");
+      }
+    };
+    handleFetchCards();
+  }, []);
 
-useEffect(() => {
-  const handleFetchCards = async () => {
-    const server = "https://back-end-f8b4.onrender.com/"
-    try {
-    const response = await fetch(server + "flashcards")
-    const cardData = await response.json()
-    setStudyCards(cardData);
-  } catch (error) {
-    console.error("Error fetching the cards. Please be patient.")
-  }
-}
-handleFetchCards()
-}, [])
-
-const handleSetView = (text:string)=> {
-  setView(text)
-}
+  const handleSetView = (text: string) => {
+    setView(text);
+  };
 
   return (
     <div className="shoji-container">
@@ -44,7 +43,11 @@ const handleSetView = (text:string)=> {
                 {user && (
                   <>
                     {user.picture && (
-                      <img className="profile" src={user.picture} alt="Profile" />
+                      <img
+                        className="profile"
+                        src={user.picture}
+                        alt="Profile"
+                      />
                     )}
                     <div className="profile-info">
                       <h2>{user.name}</h2>
@@ -54,16 +57,18 @@ const handleSetView = (text:string)=> {
                 )}
               </div>
               {/* USER PROFILE INFORMATION */}
-              <button className="btn" onClick={() => handleSetView("newcard")}>Create a new Card</button>
-              {(view === "study")? (
+              <button className="btn" onClick={() => handleSetView("newcard")}>
+                Create a new Card
+              </button>
+              {view === "study" ? (
                 studyCards ? (
-              <Card studyCards={studyCards} />
-            ) : (
-              <p>Please be patient as the cards are loading.</p>
-            )
-          ) : (
-            <NewCard setView={setView}/>
-            )}
+                  <Card studyCards={studyCards} />
+                ) : (
+                  <p>Please be patient as the cards are loading.</p>
+                )
+              ) : (
+                <NewCard setView={setView} />
+              )}
             </div>
             <div className="col mx-auto pt-2"></div>
           </div>
@@ -72,6 +77,6 @@ const handleSetView = (text:string)=> {
       <div className="shoji-door center-right-door"></div>
     </div>
   );
-}
+};
 
 export default Dojo;

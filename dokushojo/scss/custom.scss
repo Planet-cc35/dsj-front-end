@@ -7,6 +7,11 @@ body {
   overflow: hidden;
 }
 
+html {
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+}
+
 .col {
   position: relative;
   border: solid 1vw #d4a373;
@@ -173,4 +178,26 @@ body {
 .profile-container p {
   margin: 0;
   font-size: 15px;
+}
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #00c07d;
+  height: 10vh;
+  font-size: 24px;
+}
+
+.next-cards-preview {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.next-card {
+  flex-basis: calc(100% / 2);
 }
