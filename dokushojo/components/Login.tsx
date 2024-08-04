@@ -101,28 +101,35 @@ function Login({}) {
   // };
 
   return (
-    <GoogleOAuthProvider clientId={clientId}>
-      <img src="/hello.svg" className="welcome-message" alt="Welcome" />
-      <div className="google-login-button">
-        {!isLoggedIn ? (
-          <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
-        ) : (
-          <div style={{ textAlign: "center" }}>
-            <h1>User Information</h1>
-            {information?.picture && (
-              <img
-                className="profile"
-                src={information.picture}
-                alt="Profile"
-              />
-            )}
-            <p>Name: {information?.name}</p>
-            <p>Email: {information?.email}</p>
-            <button onClick={handleLogout}>Logout</button>
-          </div>
-        )}
+    <>
+      <GoogleOAuthProvider clientId={clientId}>
+        <img src="/hello.svg" className="welcome-message" alt="Welcome" />
+        <div className="google-login-button">
+          {!isLoggedIn ? (
+            <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
+          ) : (
+            <div style={{ textAlign: "center" }}>
+              <h1>User Information</h1>
+              {information?.picture && (
+                <img
+                  className="profile"
+                  src={information.picture}
+                  alt="Profile"
+                />
+              )}
+              <p>Name: {information?.name}</p>
+              <p>Email: {information?.email}</p>
+              <button onClick={handleLogout}>Logout</button>
+            </div>
+          )}
+        </div>
+      </GoogleOAuthProvider>
+      <div className="emergency-btn">
+        <button className="btn" onClick={() => navigate("/dojo")}>
+          Click in case of emergency
+        </button>
       </div>
-    </GoogleOAuthProvider>
+    </>
   );
 }
 
