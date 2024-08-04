@@ -108,7 +108,7 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
       <div className="container border">
         <form className="palette-bg" onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Name your first card</label>
+            <label className="form-label">Create a new card</label>
             <input
               maxLength={75}
               type="text"
@@ -167,7 +167,7 @@ const NewCard: React.FC<NewCardProps> = ({ setView }) => {
       </div>
       <div></div>
       <button
-        className="btn btn-secondary btn-lg mb-4"
+        className="btn btn-secondary btn-lg mb-4 study-btn"
         onClick={() => {
           setView("study");
         }}

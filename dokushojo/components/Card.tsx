@@ -22,13 +22,13 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
 
   const handleSetCardView = (text: string) => {
     setCardView(text);
-    if (text === "edit") {
-      const newCardBtn: HTMLElement = document.getElementsByClassName(
-        "new-card"
-      )[0] as HTMLElement;
+    // if (text === "edit") {
+    //   const newCardBtn: HTMLElement = document.getElementsByClassName(
+    //     "new-card"
+    //   )[0] as HTMLElement;
 
-      newCardBtn.style.display = "none";
-    }
+    //   newCardBtn.style.display = "none";
+    // }
   };
 
   const handleNextCard = () => {
@@ -84,7 +84,7 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               key={currentCardIndex}
               onClick={() => playAudio(currentCard)}
             >
-              {currentCard.card_body} {currentCardIndex}
+              {currentCard.card_body}
             </div>
             <button
               className="btn btn-secondary btn-lg m-3"
@@ -125,7 +125,7 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
                       className="card start-25 w-25 m-3 next-card"
                       onClick={() => handlePreviewCardClick(index)}
                     >
-                      {card.card_body} {index}
+                      {card.card_body}
                     </div>
                   );
                 }
@@ -153,7 +153,7 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               className="btn btn-secondary btn-lg m-4"
               onClick={() => handleSetCardView("study")}
             >
-              Back to Study
+              Back to study
             </button>
             <button
               className="btn btn-secondary btn-lg m-4"
