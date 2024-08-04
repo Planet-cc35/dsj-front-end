@@ -83,9 +83,7 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               className="card w-50 start-50 translate-middle-x my-3"
               key={currentCardIndex}
               onClick={() => playAudio(currentCard)}
-            >
-              {currentCard.card_body}
-            </div>
+            ></div>
             <button
               className="btn btn-secondary btn-lg m-3"
               onClick={handleDeleteCard}
@@ -124,9 +122,7 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
                       key={index}
                       className="card start-25 w-25 m-3 next-card"
                       onClick={() => handlePreviewCardClick(index)}
-                    >
-                      {card.card_body}
-                    </div>
+                    ></div>
                   );
                 }
                 return null;
