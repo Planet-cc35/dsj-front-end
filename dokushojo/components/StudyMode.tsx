@@ -1,7 +1,7 @@
 import React from "react";
-import NewCard from "./NewCard";
+// import NewCard from "./NewCard";
 
-const StudyMode: React.FC<any> = ({}) => {
+const StudyMode: React.FC<any> = () => {
   return (
     <>
       <div className="container">
@@ -35,7 +35,7 @@ const StudyMode: React.FC<any> = ({}) => {
           </div>
         </div>
         <button>Add a new card to the deck</button>
-        <NewCard />
+        {/* <NewCard /> */}
         <button>Switch decks</button>
       </div>
     </>

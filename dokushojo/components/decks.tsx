@@ -10,7 +10,7 @@ const DeckList: React.FC<any> = () => {
   const [decks, setDecks] = useState<Deck[]>([]); //state to store the deck data
   const [storeDeckId, setStoreDeckId] = useState<number | null>(null); //state to store the deck id
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
-  const [CreateDeckTitle, setCreateDeckTitle] = useState(""); // states to add new card
+  const [CreateDeckTitle] = useState(""); // states to add new card
   const userId = 1;
 
   // Use Effects GET ALL DECKS FROM USER ID

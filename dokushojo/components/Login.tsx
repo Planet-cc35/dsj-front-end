@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   GoogleLogin,
   googleLogout,
@@ -6,7 +6,6 @@ import {
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import { deckObject } from "./globals";
 
 const clientId =
   "11471929898-7c74bgss3h1c1f4q13bas5isbo74edfs.apps.googleusercontent.com";
@@ -16,10 +15,10 @@ function Login({}) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [information, setInformation] = useState<any>(null);
   const [userId, setUserId] = useState<any>([]);
-  const [newUser, setNewUser] = useState<object>({
+  const [newUser] = useState<object>({
     email_address: "",
   });
-  const [userObject, setUserObject] = useState<null>(null);
+  const [userObject] = useState<null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {}, [newUser]);
