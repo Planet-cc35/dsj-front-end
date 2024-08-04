@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=Outfit:wght@100..900&display=swap");
 // LOGIN SCSS
+
 body {
   background-color: #f7ede2;
   width: 100%;
@@ -74,14 +75,14 @@ body {
   left: 28%;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+// @keyframes spin {
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
 
 // DOJO SCSS
 
