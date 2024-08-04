@@ -2,37 +2,37 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { speechObject } from "./globals.d";
 
-interface NewCardProps {setView: Function}
+interface NewCardProps {
+  setView: Function;
+}
 
-const NewCard: React.FC<NewCardProps> = ({setView}) => {
-  const server = "https://back-end-f8b4.onrender.com";
+const NewCard: React.FC<NewCardProps> = ({ setView }) => {
+  const server = "https://dokushojo-backend.onrender.com";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
-  const [newAudio, setNewAudio] = useState<any | null>(null);
+  const [newAudio, setNewAudio] = useState<string | null>(null);
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
   const [btnView, setbtnView] = useState<string>("newCard");
 
-  const speechFetch = async (text: string) => {
-    try {
-      const res = await fetch(createFetchURL(text), {
-        method: "GET",
-      });
+  // const speechFetch = async (text: string) => {
+  //   try {
+  //     const res = await fetch(createFetchURL(text), {
+  //       method: "GET",
+  //     });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      console.log(res);
-      const fetchedAudio = await res.json();
-      setNewAudio(fetchedAudio.url);
-      console.log(newAudio);
-    } catch (error) {
-      console.error("Error fetching audio:", error);
-    }
-  };
+  //     if (!res.ok) {
+  //       throw new Error(`HTTP error! status: ${res.status}`);
+  //     }
+
+  //     const fetchedAudio = await res.json();
+  //     setNewAudio(fetchedAudio.url);
+  //   } catch (error) {
+  //     console.error("Error fetching audio:", error);
+  //   }
+  // };
 
   useEffect(() => {
-    console.log("New audio updated:", newAudio);
     if (newAudio) {
       const newCardData: speechObject = {
         card_title: title,
@@ -51,7 +51,6 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
   }
 
   function createFetchURL(text: string): string {
-    // const base: string = "test";
     const base: string = "https://api.voicerss.org/";
     const APIkey: string = "?key=82bb9f270cf64d539fe3c0bb3fd8d70d";
     const lang: string = "hl=ja-jp";
@@ -59,15 +58,14 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
     const src: string = "src=" + encodeURIComponent(text);
     const fetchURL: string =
       base + APIkey + "&" + lang + "&" + voice + "&" + src;
-    console.log(fetchURL);
+    setNewAudio(fetchURL); //EDITED
 
     return fetchURL;
   }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await speechFetch(body);
-    console.log("button pressed. Wating for audio.")
+    await createFetchURL(body); // EDITED
   };
 
   const handleSubmitToDb = async () => {
@@ -84,6 +82,7 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
       }
       const createdCard = await response.json();
       setSpeechObject(createdCard);
+      setView("study");
     } catch (error) {
       console.error("Error creating card:", error);
     }
@@ -109,7 +108,7 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
       <div className="container border">
         <form className="palette-bg" onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Name your first card</label>
+            <label className="form-label">Create a new card</label>
             <input
               maxLength={75}
               type="text"
@@ -139,21 +138,27 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
             </div>
           </div>
           {btnView === "newCard" ? (
-            <button type="submit" className="btn btn-warning mb-3">
+            <button type="submit" className="btn btn-warning btn-lg mb-3">
               Make a new study card
             </button>
           ) : (
             <>
-              <button className="btn btn-primary mb-3" onClick={audioTest}>
+              <button
+                className="btn btn-primary btn-lg mb-3"
+                onClick={audioTest}
+              >
                 Test the audio
               </button>
               <button
-                className="btn btn-primary mb-3"
+                className="btn btn-primary btn-lg mb-3"
                 onClick={handleSubmitToDb}
               >
                 Create this card
               </button>
-              <button className="btn btn-warning mb-3" onClick={handleReturn}>
+              <button
+                className="btn btn-warning btn-lg mb-3"
+                onClick={handleReturn}
+              >
                 Edit the text
               </button>
             </>
@@ -161,7 +166,14 @@ const NewCard: React.FC<NewCardProps> = ({setView}) => {
         </form>
       </div>
       <div></div>
-      <button className="btn btn-secondary mb-4" onClick={()=> {setView("study")}}>Return to study view</button>
+      <button
+        className="btn btn-secondary btn-lg mb-4 study-btn"
+        onClick={() => {
+          setView("study");
+        }}
+      >
+        Return to study view
+      </button>
     </>
   );
 };

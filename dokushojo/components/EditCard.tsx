@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { speechObject } from "./globals.d";
 
 interface EditCardProps {
-    setCardView: Function,
-    cardData: speechObject 
+  setCardView: Function;
+  cardData: speechObject;
 }
 
-const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
-  const server = "https://back-end-f8b4.onrender.com";
+const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
+  const server = "https://dokushojo-backend.onrender.com";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
   const [newAudio, setNewAudio] = useState<any | null>(null);
@@ -16,55 +16,40 @@ const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
   const [body, setBody] = useState<string>(cardData.card_body);
   const [btnView, setbtnView] = useState<string>("newCard");
 
-  const speechFetch = async (text: string) => {
-    try {
-      const res = await fetch(createFetchURL(text), {
-        method: "GET",
-      });
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      const fetchedAudio = await res;
-      console.log(fetchedAudio.url);
-      setNewAudio(fetchedAudio.url);
-      console.log(newAudio);
-    } catch (error) {
-      console.error("Error fetching audio:", error);
-    }
-  };
-
   function randomVoice(): string {
     const voices: string[] = ["Airi", "Fumi", "Akira"];
     const randomNum: number = Math.floor(Math.random() * voices.length);
     return voices[randomNum];
   }
 
-  function createFetchURL(text: string ): string {
+  function createFetchURL(text: string): string {
     const base: string = "https://api.voicerss.org/";
     const APIkey: string = "?key=82bb9f270cf64d539fe3c0bb3fd8d70d";
     const lang: string = "hl=ja-jp";
     const voice: string = "v=" + randomVoice();
-    const src: any = "src=" + encodeURIComponent(text);
+    const src: string = "src=" + encodeURIComponent(text);
     const fetchURL: string =
       base + APIkey + "&" + lang + "&" + voice + "&" + src;
-    console.log("the fetch url is" + fetchURL);
+    setNewAudio(fetchURL); //EDITED
 
     return fetchURL;
   }
 
+  useEffect(() => {
+    if (newAudio) {
+      const editCardData: speechObject = {
+        card_title: title,
+        card_body: body,
+        audio: newAudio,
+      };
+      setSpeechObject(editCardData);
+      setbtnView("editView");
+    }
+  }, [newAudio, title, body]);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await speechFetch(body);
-    const editCardData: speechObject = {
-      card_id: cardData.card_id,
-      card_title: title,
-      card_body: body,
-      audio: newAudio,
-    };
-    setSpeechObject(editCardData);
-    setbtnView("editView");
-    console.log(speechObject);
+    await createFetchURL(body); // EDITED
   };
 
   const handleSubmitToDb = async () => {
@@ -85,7 +70,8 @@ const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
     } catch (error) {
       console.error("Error creating card:", error);
     }
-    setCardView("study")
+
+    setCardView("study");
   };
 
   function handleReturn(): void {
@@ -107,7 +93,9 @@ const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
       <div className="container border">
         <form className="palette-bg" onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Rename your card</label>
+            <label className="form-label">
+              <h2>Edit your card</h2>
+            </label>
             <input
               maxLength={75}
               type="text"
@@ -135,7 +123,7 @@ const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
             </div>
           </div>
           {btnView === "newCard" ? (
-            <button type="submit" className="btn btn-warning mb-3">
+            <button type="submit" className="btn btn-warning btn-lg mb-3">
               Update your card
             </button>
           ) : (
@@ -149,13 +137,23 @@ const EditCard: React.FC<EditCardProps> = ({setCardView, cardData}) => {
               >
                 Update this card
               </button>
-              <button className="btn btn-warning mb-3" onClick={handleReturn}>
+              <button
+                className="btn btn-warning btn-lg mb-3"
+                onClick={handleReturn}
+              >
                 Edit further
               </button>
             </>
           )}
         </form>
-      <button className="btn btn-secondary mb-4" onClick={() => {setCardView("study")}}>Return to study view</button>
+        <button
+          className="btn btn-secondary btn-lg mb-4"
+          onClick={() => {
+            setCardView("study");
+          }}
+        >
+          Return to study view
+        </button>
       </div>
       <div></div>
     </>
