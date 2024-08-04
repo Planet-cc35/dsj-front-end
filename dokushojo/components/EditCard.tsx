@@ -114,7 +114,9 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
       <div className="container border">
         <form className="palette-bg" onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Rename your card</label>
+            <label className="form-label">
+              <h2>Edit your card</h2>
+            </label>
             <input
               maxLength={75}
               type="text"
@@ -142,7 +144,7 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
             </div>
           </div>
           {btnView === "newCard" ? (
-            <button type="submit" className="btn btn-warning mb-3">
+            <button type="submit" className="btn btn-warning btn-lg mb-3">
               Update your card
             </button>
           ) : (
@@ -156,14 +158,17 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
               >
                 Update this card
               </button>
-              <button className="btn btn-warning mb-3" onClick={handleReturn}>
+              <button
+                className="btn btn-warning btn-lg mb-3"
+                onClick={handleReturn}
+              >
                 Edit further
               </button>
             </>
           )}
         </form>
         <button
-          className="btn btn-secondary mb-4"
+          className="btn btn-secondary btn-lg mb-4"
           onClick={() => {
             setCardView("study");
           }}

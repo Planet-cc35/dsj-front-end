@@ -30,11 +30,12 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
 
       newCardBtn.style.display = "none";
     }
-    console.log(currentCard.card_id);
   };
 
   const handleNextCard = () => {
     setCurrentCardIndex((prevIndex) => (prevIndex + 1) % studyCards.length);
+    const currentCardIndexHardCode = studyCards[currentCardIndex + 1];
+    playAudio(currentCardIndexHardCode);
     console.log(currentCardIndex);
     console.log(cards);
   };
@@ -88,34 +89,34 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               key={currentCardIndex}
               onClick={() => playAudio(currentCard)}
             >
-              Nothing to see here {currentCardIndex}
+              {currentCard.card_body} {currentCardIndex}
             </div>
             <button
-              className="btn btn-primary btn-lg m-3"
+              className="btn btn-secondary btn-lg m-3"
               onClick={handleDeleteCard}
             >
               Delete this card
             </button>
             <button
-              className="btn btn-primary btn-lg m-3"
+              className="btn btn-secondary btn-lg m-3"
               onClick={() => handleSetCardView("edit")}
             >
               Edit this card
             </button>
             <button
-              className="btn btn-primary btn-lg m-3"
+              className="btn btn-secondary btn-lg m-3"
               onClick={() => playAudio(currentCard)}
             >
               Play the audio again
             </button>
             <button
-              className="btn btn-primary btn-lg m-3"
+              className="btn btn-secondary btn-lg m-3"
               onClick={handleNextCard}
             >
               Next card
             </button>
             <button
-              className="btn btn-primary btn-lg m-3"
+              className="btn btn-secondary btn-lg m-3"
               onClick={handleShowAnswer}
             >
               Show me the answer
@@ -129,7 +130,7 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
                       className="card start-25 w-25 m-3 next-card"
                       onClick={() => handlePreviewCardClick(index)}
                     >
-                      Nothing to see here either. {card.card_body} {index}
+                      {card.card_body} {index}
                     </div>
                   );
                 }
@@ -154,19 +155,19 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               <audio controls src={currentCard.audio}></audio>
             </figure>
             <button
-              className="btn btn-primary btn-lg m-4"
+              className="btn btn-secondary btn-lg m-4"
               onClick={() => handleSetCardView("study")}
             >
               Back to Study
             </button>
             <button
-              className="btn btn-primary btn-lg m-4"
+              className="btn btn-secondary btn-lg m-4"
               onClick={() => handleSetCardView("edit")}
             >
               Edit this card
             </button>
             <button
-              className="btn btn-primary btn-lg m-4"
+              className="btn btn-secondary btn-lg m-4"
               onClick={handleNextCard}
             >
               Next card
