@@ -1,17 +1,18 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Login from "../components/Login";
-import Dojo from "./Dojo";
-import DeckList from "../components/Decks";
+// import Dojo from "./Dojo";
+import DeckList from "../components/decks";
 
 function App() {
   const location = useLocation();
-  const isDojoPage = location.pathname === "/dojo";
+  // const isDojoPage = location.pathname === "/dojo";
   const isDeckPage = location.pathname === "/decks";
 
   return (
     <div className="container text-center mw-100 ">
       <div className="row vh-100">
-        {!isDojoPage && (
+        {/* {!isDojoPage && ( */}
+        {!isDeckPage && (
           <div className="col-9 pt-2">
             <img
               src="circle copiar.svg"

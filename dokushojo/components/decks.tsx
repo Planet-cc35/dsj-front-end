@@ -4,11 +4,15 @@ import { useState, useEffect } from "react";
 const endPoint = import.meta.env.VITE_SERVER + `/decks`;
 
 interface Deck {
-  deck_id: number;
-  deck_title: string;
+  created_at: Date;
+  customer_id: number;
+  id: number;
+  title: string;
+  updated_at: Date;
 }
+interface DeckListProps {}
 
-const DeckList: React.FC<any> = () => {
+const DeckList: React.FC<DeckListProps> = () => {
   const [decks, setDecks] = useState<Deck[]>([]); //state to store the deck data
   const [storeDeckId, setStoreDeckId] = useState<number | null>(null); //state to store the deck id
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
@@ -54,9 +58,7 @@ const DeckList: React.FC<any> = () => {
     if (response.ok) {
       setDecks(
         decks.map((deck) =>
-          deck.deck_id === storeDeckId
-            ? { ...deck, deck_title: newTitle }
-            : deck
+          deck.id === storeDeckId ? { ...deck, deck_title: newTitle } : deck
         )
       );
       setStoreDeckId(null);
@@ -76,7 +78,7 @@ const DeckList: React.FC<any> = () => {
     );
 
     if (response.ok) {
-      setDecks(decks.filter((deck) => deck.deck_id !== deckId));
+      setDecks(decks.filter((deck) => deck.id !== deckId));
     } else {
       console.error("Failed to delete the deck.");
     }
@@ -97,11 +99,11 @@ const DeckList: React.FC<any> = () => {
       {decks.length ? (
         <div className="card-container">
           {decks.map((deck) => (
-            <div className="card" key={deck.deck_id}>
-              {storeDeckId === deck.deck_id ? (
+            <div className="card" key={deck.id}>
+              {storeDeckId === deck.id ? (
                 <div>
                   <input
-                    key={deck.deck_id}
+                    key={deck.id}
                     type="text"
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
@@ -118,14 +120,12 @@ const DeckList: React.FC<any> = () => {
                 </div>
               ) : (
                 <div>
-                  <h3 className="card-title">{deck.deck_title}</h3>
+                  <h3 className="card-title">{deck.title}</h3>
                   <div className="card-actions">
-                    <button
-                      onClick={() => handleEdit(deck.deck_id, deck.deck_title)}
-                    >
+                    <button onClick={() => handleEdit(deck.id, deck.title)}>
                       Edit
                     </button>
-                    <button onClick={() => handleDelete(deck.deck_id)}>
+                    <button onClick={() => handleDelete(deck.id)}>
                       Delete
                     </button>
                   </div>
