@@ -8,6 +8,7 @@ interface Props {
 
 const CardComponent: React.FC<Props> = (props) => {
   const [useIsShowAnswer, setIsShowAnswer] = useState<boolean>(false);
+
   return (
     <div
       className="card btn text-white bg-secondary mb-3"

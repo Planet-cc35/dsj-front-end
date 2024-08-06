@@ -44,7 +44,7 @@ const Deck: React.FC<Props> = (props) => {
           <input className="mx-3" placeholder="Your answer..."></input>
           <button>Check</button>
         </div>
-        <div className="d-flex justify-content-center mt-3 mb-5 ">
+        <div className="d-flex justify-content-center mt-3 mb-5 gap-3">
           <button className="btn btn-dark" type="button">
             Delete Card
           </button>
@@ -62,7 +62,7 @@ const Deck: React.FC<Props> = (props) => {
             useCards.map((card: CardType, index) => {
               return (
                 <CardComponent
-                  key={index}
+                  key={card.id}
                   card={card}
                   index={index + 1}
                 ></CardComponent>
