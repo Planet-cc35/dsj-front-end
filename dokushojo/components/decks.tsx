@@ -1,7 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useNavigate, BrowserRouter, Route, Routes } from "react-router-dom";
 
-const endPoint = import.meta.env.VITE_SERVER + `/decks`;
+const endPoint = import.meta.env.VITE_SERVER + ``;
 
 interface DeckDatabase extends BaseDeck {
   created_at: Date;
@@ -10,6 +11,15 @@ interface DeckDatabase extends BaseDeck {
   // title: string;
   updated_at: Date;
 }
+interface CardDatabase {
+  id: number;
+  deck_id: number;
+  front: string;
+  back: string;
+  created_at: Date;
+  updated_at: Date;
+  audio_url: null;
+}
 interface DeckListProps {}
 interface BaseDeck {
   title: string;
@@ -17,17 +27,19 @@ interface BaseDeck {
 }
 
 const DeckList: React.FC<DeckListProps> = () => {
+  const navigate = useNavigate();
   const [decks, setDecks] = useState<DeckDatabase[]>([]); //state to store the deck data
   const [storeDeckId, setStoreDeckId] = useState<number | null>(null); //state to store the deck id
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
   const [CreateDeckTitle, setCreateDeckTitle] = useState(""); // states to add new card
+  const [getDeck, setGetDeck] = useState({});
   const userId = 1;
 
   // Use Effects GET ALL DECKS FROM USER ID
   useEffect(() => {
     async function fetchDecks() {
       const response = await fetch(
-        endPoint + `/customers/${userId}`
+        endPoint + `/decks/customers/${userId}`
         // `https://dokushojo-backend.onrender.com/decks/users/${userId}`
       );
       const data: DeckDatabase[] = await response.json(); // JSON data
@@ -48,7 +60,7 @@ const DeckList: React.FC<DeckListProps> = () => {
 
     const response = await fetch(
       // `https://dokushojo-backend.onrender.com/decks/${storeDeckId}`,
-      endPoint + `/${storeDeckId}`,
+      endPoint + `/decks/${storeDeckId}`,
       {
         method: "PUT",
         headers: {
@@ -73,7 +85,7 @@ const DeckList: React.FC<DeckListProps> = () => {
 
   const handleDelete = async (deckId: number) => {
     const response = await fetch(
-      endPoint + `/${deckId}`,
+      endPoint + `/decks/${deckId}`,
       // `https://dokushojo-backend.onrender.com/decks/${deckId}`,
       {
         method: "DELETE",
@@ -91,13 +103,18 @@ const DeckList: React.FC<DeckListProps> = () => {
       customer_id: userId,
       title: CreateDeckTitle,
     };
-    await fetch(endPoint, {
+    await fetch(endPoint + `/decks`, {
       headers: {
         "Content-Type": "application/JSON",
       },
       method: "POST",
       body: JSON.stringify(baseDeck),
     });
+  };
+  const handleGetDeck = async (DeckId: number) => {
+    const response = await fetch(endPoint + `/cards/decks/${DeckId}`);
+    const data: CardDatabase[] = await response.json();
+    setGetDeck(data);
   };
 
   return (
@@ -117,7 +134,7 @@ const DeckList: React.FC<DeckListProps> = () => {
           {decks.map((deck) => (
             <div className="card" key={deck.id}>
               {storeDeckId === deck.id ? (
-                <div>
+                <div className="card-body">
                   <input
                     key={deck.id}
                     type="text"
@@ -135,11 +152,17 @@ const DeckList: React.FC<DeckListProps> = () => {
                   </button>
                 </div>
               ) : (
-                <div>
+                <div className="card-body">
                   <h3 className="card-title">{deck.title}</h3>
                   <div className="card-actions">
                     <button onClick={() => handleEdit(deck.id, deck.title)}>
                       Edit
+                    </button>
+                    {/* <Routes>
+                      <Route path="/study" element={<Card/ studyCards=getDeck>}>
+                    </Routes> */}
+                    <button onClick={() => handleGetDeck(deck.id)}>
+                      Study
                     </button>
                     <button onClick={() => handleDelete(deck.id)}>
                       Delete
@@ -158,3 +181,10 @@ const DeckList: React.FC<DeckListProps> = () => {
 };
 
 export default DeckList;
+// export default function DeckListWrapper() {
+//   return (
+//     <BrowserRouter>
+//       <DeckList />
+//     </BrowserRouter>
+//   );
+// }

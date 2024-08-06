@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Login from "../components/Login";
 // import Dojo from "./Dojo";
 import DeckList from "../components/decks";
+import Card from "../components/Card";
 
 function App() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function App() {
         </div>
         <Routes>
           <Route path="/decks" element={<DeckList />} />
+          {/* <Route path="/study" element={<Card />} /> */}
           {/* <Route path="/dojo" element={<Dojo />} /> */}
         </Routes>
       </div>
