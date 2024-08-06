@@ -23,7 +23,7 @@ const DeckList: React.FC<DeckListProps> = () => {
   useEffect(() => {
     async function fetchDecks() {
       const response = await fetch(
-        endPoint + `/users/${userId}`
+        endPoint + `/customers/${userId}`
         // `https://dokushojo-backend.onrender.com/decks/users/${userId}`
       );
       const data: Deck[] = await response.json(); // JSON data
