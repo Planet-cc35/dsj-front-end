@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 const clientId =
   "11471929898-7c74bgss3h1c1f4q13bas5isbo74edfs.apps.googleusercontent.com";
-const server = "https://dokushojo-backend.onrender.com";
+// const server = "https://dokushojo-backend.onrender.com";
+const server = import.meta.env.VITE_SERVER;
 
 function Login({}) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -25,7 +26,6 @@ function Login({}) {
 
   useEffect(() => {
     handleGetId();
-    console.log(userId);
   }, []);
   useEffect(() => {}, []);
 
@@ -40,7 +40,8 @@ function Login({}) {
     const decoded = jwtDecode(credentialResponse?.credential);
     setInformation(decoded);
     setIsLoggedIn(true);
-    navigate("/dojo", { state: { user: decoded } });
+    navigate("/decks", { state: { user: decoded } });
+    // navigate("/dojo", { state: { user: decoded } });
 
     // const email = decoded.email;
 
@@ -65,6 +66,7 @@ function Login({}) {
   };
 
   const handleGetId = async () => {
+    console.log(server);
     try {
       const res = await fetch(server + "/", {
         method: "GET",
@@ -125,7 +127,8 @@ function Login({}) {
         </div>
       </GoogleOAuthProvider>
       <div className="emergency-btn">
-        <button className="btn" onClick={() => navigate("/dojo")}>
+        {/* <button className="btn" onClick={() => navigate("/dojo")}> */}
+        <button className="btn" onClick={() => navigate("/decks")}>
           Click in case of emergency
         </button>
       </div>
