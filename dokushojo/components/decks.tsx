@@ -1,7 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-
+import { useLocation } from "react-router-dom";
+import { UserType } from "../src/interfaces/UserType";
 const endPoint = import.meta.env.VITE_SERVER + `/decks`;
+const userPoint = import.meta.env.VITE_SERVER;
 
 interface Deck {
   created_at: Date;
@@ -10,7 +12,9 @@ interface Deck {
   title: string;
   updated_at: Date;
 }
-interface DeckListProps {}
+interface DeckListProps {
+  
+}
 
 const DeckList: React.FC<DeckListProps> = () => {
   const [decks, setDecks] = useState<Deck[]>([]); //state to store the deck data
@@ -18,7 +22,7 @@ const DeckList: React.FC<DeckListProps> = () => {
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
   const [CreateDeckTitle, setCreateDeckTitle] = useState(""); // states to add new card
   const userId = 1;
-
+  const location = useLocation();
   // Use Effects GET ALL DECKS FROM USER ID
   useEffect(() => {
     async function fetchDecks() {
@@ -33,13 +37,35 @@ const DeckList: React.FC<DeckListProps> = () => {
 
     fetchDecks();
   }, [userId]);
+  
+  useEffect(() => {
+    getUserInfo();
+  }, [])
 
   // Handler Functions
   const handleEdit = (deckId: number, deckTitle: string) => {
     setStoreDeckId(deckId);
     setNewTitle(deckTitle);
   };
-
+  
+  const getUserInfo = async() => {
+    try{
+      // const email = location.state.userEmail;
+      const getUsers = await fetch(userPoint + "/emails")
+      const emailArr = await getUsers.json();
+      for(let emailObj of emailArr){
+        if(emailObj.email_address === email){
+          console.log("match!")
+          return;
+        } else{
+          console.log("hell no")
+        }
+      }
+    }
+    catch{
+      console.error("error");
+    }
+  }
   const handleSaveEdit = async () => {
     if (storeDeckId === null) return;
 

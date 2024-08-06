@@ -5,7 +5,8 @@ import {
   GoogleOAuthProvider,
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserType } from "../src/interfaces/UserType";
 
 const clientId =
   "11471929898-7c74bgss3h1c1f4q13bas5isbo74edfs.apps.googleusercontent.com";
@@ -36,29 +37,11 @@ function Login({}) {
     googleLogout();
   };
 
-  const handleSuccess = (credentialResponse: any) => {
-    const decoded = jwtDecode(credentialResponse?.credential);
-    setInformation(decoded);
+  const handleSuccess = async (credentialResponse: any) => {
+    const decoded:UserType = await jwtDecode(credentialResponse?.credential);
+    setInformation(decoded.email);
     setIsLoggedIn(true);
-    navigate("/decks", { state: { user: decoded } });
-    // navigate("/dojo", { state: { user: decoded } });
-
-    // const email = decoded.email;
-
-    // for (const user of userId) {
-    //   console.log(decoded.email);
-    //   if (user.email_address === decoded.email) {
-    //     setUserObject(user.user_id);
-    //     console.log(userObject);
-    //     navigate("/dojo", { state: { user: decoded } });
-    //   } else if (user.email_address !== decoded.email) {
-    //     setNewUser({ email_address: email });
-    //     handleCreateNewUser(newUser);
-    //   }
-    // }
-
-    console.log(decoded);
-    console.log(credentialResponse);
+    navigate("/decks", { state: { userEmail: decoded.email } });
   };
 
   const handleError = () => {
@@ -66,7 +49,6 @@ function Login({}) {
   };
 
   const handleGetId = async () => {
-    console.log(server);
     try {
       const res = await fetch(server + "/", {
         method: "GET",
