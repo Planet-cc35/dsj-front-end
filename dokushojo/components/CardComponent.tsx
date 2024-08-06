@@ -3,16 +3,18 @@ import { CardType } from "../src/interfaces/CardType";
 
 interface Props {
   card: CardType;
+  index: number;
 }
 
 const CardComponent: React.FC<Props> = (props) => {
   const [useIsShowAnswer, setIsShowAnswer] = useState<boolean>(false);
+
   return (
     <div
       className="card btn text-white bg-secondary mb-3"
       style={{ width: "200px", height: "170px" }}
     >
-      <div className="card-header text-center">1</div>
+      <div className="card-header text-center">{props.index}</div>
       <div className="card-body">
         <h5 className="card-title"></h5>
         {!useIsShowAnswer ? (
