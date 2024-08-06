@@ -1,25 +1,28 @@
-import { useState } from "react";
-import { CardType } from "../src/interfaces/CardType";
+import DeckCardType from "../interfaces/DeckCardType";
 
 interface Props {
-  card: CardType;
+  card: DeckCardType;
   index: number;
-  selectCardClick: (card: CardType, index: number) => void;
+  isShowAnswer: boolean;
+  selectCardClick: (card: DeckCardType, index: number) => void;
 }
 
 const CardComponent: React.FC<Props> = (props) => {
-  const [useIsShowAnswer, setIsShowAnswer] = useState<boolean>(false);
-
   return (
     <div
-      className="card btn text-white bg-secondary mb-3"
+      className={`btn card text-white p-0 border-3 ${
+        props.card.isSelected ? "bg-primary" : "bg-secondary"
+      }`}
       style={{ width: "200px", height: "170px" }}
       onClick={() => props.selectCardClick(props.card, props.index)}
     >
       <div className="card-header text-center">{props.index + 1}</div>
-      <div className="card-body">
-        <h5 className="card-title"></h5>
-        {!useIsShowAnswer ? (
+      <div
+        className={`card-body d-flex justify-content-center align-items-center ${
+          props.isShowAnswer && "bg-warning-subtle text-black"
+        }`}
+      >
+        {!props.isShowAnswer ? (
           <p className="card-text">{props.card.front}</p>
         ) : (
           <p className="card-text">{props.card.back}</p>
