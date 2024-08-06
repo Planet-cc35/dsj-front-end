@@ -3,17 +3,21 @@ import { useState, useEffect } from "react";
 
 const endPoint = import.meta.env.VITE_SERVER + `/decks`;
 
-interface Deck {
+interface DeckDatabase extends BaseDeck {
   created_at: Date;
-  customer_id: number;
+  // customer_id: number;
   id: number;
-  title: string;
+  // title: string;
   updated_at: Date;
 }
 interface DeckListProps {}
+interface BaseDeck {
+  title: string;
+  customer_id: number;
+}
 
 const DeckList: React.FC<DeckListProps> = () => {
-  const [decks, setDecks] = useState<Deck[]>([]); //state to store the deck data
+  const [decks, setDecks] = useState<DeckDatabase[]>([]); //state to store the deck data
   const [storeDeckId, setStoreDeckId] = useState<number | null>(null); //state to store the deck id
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
   const [CreateDeckTitle, setCreateDeckTitle] = useState(""); // states to add new card
@@ -23,11 +27,10 @@ const DeckList: React.FC<DeckListProps> = () => {
   useEffect(() => {
     async function fetchDecks() {
       const response = await fetch(
-        endPoint + `/users/${userId}`
+        endPoint + `/customers/${userId}`
         // `https://dokushojo-backend.onrender.com/decks/users/${userId}`
       );
-      const data: Deck[] = await response.json(); // JSON data
-      console.log(data);
+      const data: DeckDatabase[] = await response.json(); // JSON data
       setDecks(data);
     }
 
@@ -83,6 +86,19 @@ const DeckList: React.FC<DeckListProps> = () => {
       console.error("Failed to delete the deck.");
     }
   };
+  const handleCreate = async () => {
+    const baseDeck: BaseDeck = {
+      customer_id: userId,
+      title: CreateDeckTitle,
+    };
+    await fetch(endPoint, {
+      headers: {
+        "Content-Type": "application/JSON",
+      },
+      method: "POST",
+      body: JSON.stringify(baseDeck),
+    });
+  };
 
   return (
     <div className="deck-list">
@@ -92,9 +108,9 @@ const DeckList: React.FC<DeckListProps> = () => {
           type="text"
           placeholder="New deck title"
           value={CreateDeckTitle}
-          onChange={(e) => e.target.value}
+          onChange={(e) => setCreateDeckTitle(e.target.value)}
         />
-        <button>Create a new Deck</button>
+        <button onClick={handleCreate}>Create a new Deck</button>
       </div>
       {decks.length ? (
         <div className="card-container">
