@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CardComponent from "../components/CardComponent";
 import { fetchAllCardsByDeckId } from "./api/cardApi";
+import { CardType } from "./interfaces/CardType";
 // TODO: update this to deck interface
 
 interface Deck {
@@ -12,12 +13,15 @@ interface Props {
 }
 
 const Deck: React.FC<Props> = (props) => {
+  const [useCards, setCards] = useState<CardType[] | null>(null);
+  const [useIsShowAnswer, setIsShowAnswer] = useState<boolean>(false);
+
   useEffect(() => {
     (async () => {
       //TODO remove this
       props = { deck: { id: 1 } };
       const cards = await fetchAllCardsByDeckId(props.deck.id);
-      console.log(cards);
+      setCards(cards);
     })();
   }, []);
 
@@ -48,7 +52,10 @@ const Deck: React.FC<Props> = (props) => {
           >
             + Add Card
           </button>
-          {/* <CardComponent></CardComponent> */}
+          {useCards &&
+            useCards.map((card: CardType, index) => {
+              return <CardComponent key={index} card={card}></CardComponent>;
+            })}
         </div>
       </div>
     </section>

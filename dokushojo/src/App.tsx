@@ -51,9 +51,9 @@ function App() {
 export default function AppWrapper() {
   return (
     <BrowserRouter>
-      <App />
+      {/* <App /> */}
       {/* <Dojo/> */}
-      {/* <Deck><Deck/> */}
+      <Deck />
     </BrowserRouter>
   );
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { CardType } from "../src/interfaces/CardType";
 
 interface Props {
@@ -5,6 +6,7 @@ interface Props {
 }
 
 const CardComponent: React.FC<Props> = (props) => {
+  const [useIsShowAnswer, setIsShowAnswer] = useState<boolean>(false);
   return (
     <div
       className="card btn text-white bg-secondary mb-3"
@@ -13,10 +15,11 @@ const CardComponent: React.FC<Props> = (props) => {
       <div className="card-header text-center">1</div>
       <div className="card-body">
         <h5 className="card-title"></h5>
-        <p className="card-text">{props.card.front}Hint.</p>
-        <p className="card-text">
-          {props.card.back}Gustavo likes Riven to play.
-        </p>
+        {!useIsShowAnswer ? (
+          <p className="card-text">{props.card.front}</p>
+        ) : (
+          <p className="card-text">{props.card.back}</p>
+        )}
       </div>
     </div>
   );
