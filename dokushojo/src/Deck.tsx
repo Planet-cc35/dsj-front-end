@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CardComponent from "../components/CardComponent";
 import { fetchAllCardsByDeckId } from "./api/cardApi";
 import { CardType } from "./interfaces/CardType";
+import { useNavigate } from "react-router-dom";
 // TODO: update this to deck interface
 
 interface Deck {
@@ -14,7 +15,10 @@ interface Props {
 
 const Deck: React.FC<Props> = (props) => {
   const [useCards, setCards] = useState<CardType[] | null>(null);
-  const [useIsShowAnswer, setIsShowAnswer] = useState<boolean>(false);
+  const navToDecks = useNavigate();
+  const handleCloseClick = () => {
+    navToDecks("/");
+  };
 
   useEffect(() => {
     (async () => {
@@ -30,7 +34,9 @@ const Deck: React.FC<Props> = (props) => {
       <div className="container my-3">
         <div className="d-flex justify-content-between">
           <h2 className="mb-3">Name of deck</h2>
-          <button className="btn btn-dark">Close</button>
+          <button className="btn btn-dark" onClick={handleCloseClick}>
+            Close
+          </button>
         </div>
         <div className="container text-center my-3e">
           <h3>Card 1:</h3>
@@ -54,7 +60,13 @@ const Deck: React.FC<Props> = (props) => {
           </button>
           {useCards &&
             useCards.map((card: CardType, index) => {
-              return <CardComponent key={index} card={card}></CardComponent>;
+              return (
+                <CardComponent
+                  key={index}
+                  card={card}
+                  index={index + 1}
+                ></CardComponent>
+              );
             })}
         </div>
       </div>
