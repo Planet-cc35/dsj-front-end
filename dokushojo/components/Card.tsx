@@ -2,6 +2,8 @@ import { useState } from "react";
 import EditCard from "./EditCard";
 import { speechObject } from "./globals";
 
+const endPoint = import.meta.env.VITE_SERVER;
+
 interface CardProps {
   studyCards: speechObject[];
 }
@@ -46,7 +48,8 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
 
     try {
       const response = await fetch(
-        `https://dokushojo-backend.onrender.com/flashcards/${currentCard.card_id}`,
+        // `https://dokushojo-backend.onrender.com/flashcards/${currentCard.card_id}`,
+        endPoint + `/flashcards/${currentCard.card_id}`,
         {
           method: "DELETE",
         }
@@ -88,31 +91,31 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               className="btn btn-secondary btn-lg m-3"
               onClick={handleDeleteCard}
             >
-              Delete this card
+              🇽 Delete this card
             </button>
             <button
               className="btn btn-secondary btn-lg m-3"
               onClick={() => handleSetCardView("edit")}
             >
-              Edit this card
+              ✏️ Edit this card
             </button>
             <button
               className="btn btn-secondary btn-lg m-3"
               onClick={() => playAudio(currentCard)}
             >
-              Play the audio again
+              🔈 Play the audio again
             </button>
             <button
               className="btn btn-secondary btn-lg m-3"
               onClick={handleNextCard}
             >
-              Next card
+              ➡️ Next card
             </button>
             <button
               className="btn btn-secondary btn-lg m-3"
               onClick={handleShowAnswer}
             >
-              Show me the answer
+              ✔️ Show me the answer
             </button>
             <div className="next-cards-preview">
               {studyCards.map((_, index) => {
@@ -149,19 +152,19 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               className="btn btn-secondary btn-lg m-4"
               onClick={() => handleSetCardView("study")}
             >
-              Back to study
+              ↩️Back to study
             </button>
             <button
               className="btn btn-secondary btn-lg m-4"
               onClick={() => handleSetCardView("edit")}
             >
-              Edit this card
+              ✏️Edit this card
             </button>
             <button
               className="btn btn-secondary btn-lg m-4"
               onClick={handleNextCard}
             >
-              Next card
+              ➡️Next card
             </button>
           </>
         );
