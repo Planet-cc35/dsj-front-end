@@ -2,6 +2,8 @@ import { useState } from "react";
 import EditCard from "./EditCard";
 import { speechObject } from "./globals";
 
+const endPoint = import.meta.env.VITE_SERVER;
+
 interface CardProps {
   studyCards: speechObject[];
 }
@@ -46,7 +48,8 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
 
     try {
       const response = await fetch(
-        `https://dokushojo-backend.onrender.com/flashcards/${currentCard.card_id}`,
+        // `https://dokushojo-backend.onrender.com/flashcards/${currentCard.card_id}`,
+        endPoint + `/flashcards/${currentCard.card_id}`,
         {
           method: "DELETE",
         }

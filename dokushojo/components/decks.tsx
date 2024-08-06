@@ -1,6 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
+const endPoint = import.meta.env.VITE_SERVER + `/decks`;
+
 interface Deck {
   deck_id: number;
   deck_title: string;
@@ -10,16 +12,18 @@ const DeckList: React.FC<any> = () => {
   const [decks, setDecks] = useState<Deck[]>([]); //state to store the deck data
   const [storeDeckId, setStoreDeckId] = useState<number | null>(null); //state to store the deck id
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
-  const [CreateDeckTitle] = useState(""); // states to add new card
+  const [CreateDeckTitle, setCreateDeckTitle] = useState(""); // states to add new card
   const userId = 1;
 
   // Use Effects GET ALL DECKS FROM USER ID
   useEffect(() => {
     async function fetchDecks() {
       const response = await fetch(
-        `https://dokushojo-backend.onrender.com/decks/users/${userId}`
+        endPoint + `/users/${userId}`
+        // `https://dokushojo-backend.onrender.com/decks/users/${userId}`
       );
       const data: Deck[] = await response.json(); // JSON data
+      console.log(data);
       setDecks(data);
     }
 
@@ -36,7 +40,8 @@ const DeckList: React.FC<any> = () => {
     if (storeDeckId === null) return;
 
     const response = await fetch(
-      `https://dokushojo-backend.onrender.com/decks/${storeDeckId}`,
+      // `https://dokushojo-backend.onrender.com/decks/${storeDeckId}`,
+      endPoint + `/${storeDeckId}`,
       {
         method: "PUT",
         headers: {
@@ -63,7 +68,8 @@ const DeckList: React.FC<any> = () => {
 
   const handleDelete = async (deckId: number) => {
     const response = await fetch(
-      `https://dokushojo-backend.onrender.com/decks/${deckId}`,
+      endPoint + `/${deckId}`,
+      // `https://dokushojo-backend.onrender.com/decks/${deckId}`,
       {
         method: "DELETE",
       }
@@ -88,7 +94,7 @@ const DeckList: React.FC<any> = () => {
         />
         <button>Create a new Deck</button>
       </div>
-      {decks.length > 0 ? (
+      {decks.length ? (
         <div className="card-container">
           {decks.map((deck) => (
             <div className="card" key={deck.deck_id}>
