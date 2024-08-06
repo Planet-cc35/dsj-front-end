@@ -8,7 +8,8 @@ interface EditCardProps {
 }
 
 const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
-  const server = "https://dokushojo-backend.onrender.com";
+  const server = import.meta.env.VITE_SERVER;
+  // const server = "https://dokushojo-backend.onrender.com";
 
   const [speechObject, setSpeechObject] = useState<speechObject | null>(null);
   const [newAudio, setNewAudio] = useState<any | null>(null);

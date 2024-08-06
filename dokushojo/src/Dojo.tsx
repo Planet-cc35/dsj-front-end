@@ -13,7 +13,8 @@ const Dojo: React.FC = () => {
 
   useEffect(() => {
     const handleFetchCards = async () => {
-      const server = "https://dokushojo-backend.onrender.com/";
+      // const server = "https://dokushojo-backend.onrender.com/";
+      const server = import.meta.env.VITE_SERVER;
       try {
         const response = await fetch(server + "flashcards");
         const cardData = await response.json();
