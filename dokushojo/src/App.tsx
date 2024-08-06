@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Login from "../components/Login";
 import Dojo from "./Dojo";
+import Deck from "./Deck";
 
 function App() {
   const location = useLocation();
@@ -46,7 +47,9 @@ function App() {
 export default function AppWrapper() {
   return (
     <BrowserRouter>
-      <App />
+      {/* <App /> */}
+      {/* <Dojo/> */}
+      <Deck/>
     </BrowserRouter>
   );
 }

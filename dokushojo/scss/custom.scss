@@ -177,15 +177,15 @@ body {
   font-size: 15px;
 }
 
-.card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background-color: #00c07d;
-  height: 10vh;
-  font-size: 24px;
-}
+// .card {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 20px;
+//   background-color: #00c07d;
+//   height: 10vh;
+//   font-size: 24px;
+// }
 
 .next-cards-preview {
   display: flex;
@@ -205,7 +205,11 @@ body {
 }
 
 @media screen and (max-width: 600px) {
-  .card {
-    font-size: 16px;
-  }
+  // .card {
+  //   font-size: 16px;
+  // }
+}
+
+.btn-secondary btn-lg m-3 {
+  color: black
 }

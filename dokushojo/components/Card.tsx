@@ -88,31 +88,31 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               className="btn btn-secondary btn-lg m-3"
               onClick={handleDeleteCard}
             >
-              Delete this card
+              🇽 Delete this card
             </button>
             <button
               className="btn btn-secondary btn-lg m-3"
               onClick={() => handleSetCardView("edit")}
             >
-              Edit this card
+              ✏️ Edit this card
             </button>
             <button
               className="btn btn-secondary btn-lg m-3"
               onClick={() => playAudio(currentCard)}
             >
-              Play the audio again
+              🔈 Play the audio again
             </button>
             <button
               className="btn btn-secondary btn-lg m-3"
               onClick={handleNextCard}
             >
-              Next card
+              ➡️ Next card
             </button>
             <button
               className="btn btn-secondary btn-lg m-3"
               onClick={handleShowAnswer}
             >
-              Show me the answer
+              ✔️ Show me the answer
             </button>
             <div className="next-cards-preview">
               {studyCards.map((_, index) => {
@@ -149,19 +149,19 @@ const Card: React.FC<CardProps> = ({ studyCards }) => {
               className="btn btn-secondary btn-lg m-4"
               onClick={() => handleSetCardView("study")}
             >
-              Back to study
+              ↩️Back to study
             </button>
             <button
               className="btn btn-secondary btn-lg m-4"
               onClick={() => handleSetCardView("edit")}
             >
-              Edit this card
+              ✏️Edit this card
             </button>
             <button
               className="btn btn-secondary btn-lg m-4"
               onClick={handleNextCard}
             >
-              Next card
+              ➡️Next card
             </button>
           </>
         );
