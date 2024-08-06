@@ -21,8 +21,10 @@ const DeckList: React.FC<DeckListProps> = () => {
   const [storeDeckId, setStoreDeckId] = useState<number | null>(null); //state to store the deck id
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
   const [CreateDeckTitle, setCreateDeckTitle] = useState(""); // states to add new card
-  const userId = 1;
+  
   const location = useLocation();
+  const userId = location.state.userId;
+ 
   // Use Effects GET ALL DECKS FROM USER ID
   useEffect(() => {
     async function fetchDecks() {
@@ -31,16 +33,14 @@ const DeckList: React.FC<DeckListProps> = () => {
         // `https://dokushojo-backend.onrender.com/decks/users/${userId}`
       );
       const data: Deck[] = await response.json(); // JSON data
-      console.log(data);
       setDecks(data);
     }
 
     fetchDecks();
   }, [userId]);
   
-  useEffect(() => {
-    getUserInfo();
-  }, [])
+
+  
 
   // Handler Functions
   const handleEdit = (deckId: number, deckTitle: string) => {
@@ -48,24 +48,6 @@ const DeckList: React.FC<DeckListProps> = () => {
     setNewTitle(deckTitle);
   };
   
-  const getUserInfo = async() => {
-    try{
-      // const email = location.state.userEmail;
-      const getUsers = await fetch(userPoint + "/emails")
-      const emailArr = await getUsers.json();
-      for(let emailObj of emailArr){
-        if(emailObj.email_address === email){
-          console.log("match!")
-          return;
-        } else{
-          console.log("hell no")
-        }
-      }
-    }
-    catch{
-      console.error("error");
-    }
-  }
   const handleSaveEdit = async () => {
     if (storeDeckId === null) return;
 

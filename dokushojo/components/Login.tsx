@@ -5,9 +5,9 @@ import {
   GoogleOAuthProvider,
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserType } from "../src/interfaces/UserType";
-
+import { CreateCustomerType } from "../src/interfaces/CreateCustomerType";
 const clientId =
   "11471929898-7c74bgss3h1c1f4q13bas5isbo74edfs.apps.googleusercontent.com";
 // const server = "https://dokushojo-backend.onrender.com";
@@ -15,55 +15,62 @@ const server = import.meta.env.VITE_SERVER;
 
 function Login({}) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [information, setInformation] = useState<any>(null);
-  const [userId, setUserId] = useState<any>([]);
-  const [newUser] = useState<object>({
-    email_address: "",
-  });
-  const [userObject] = useState<null>(null);
+  const [information, setInformation] = useState<any>(null);  //it is the logged in email
+  const [userId, setUserId] = useState<number | null>(null);
+  const [name, setName] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {}, [newUser]);
+  // useEffect(() => {}, [newUser]);
 
   useEffect(() => {
-    handleGetId();
-  }, []);
-  useEffect(() => {}, []);
-
-  useEffect(() => {}, [userObject]);
+    getAllUserEmails();
+  }, [isLoggedIn]);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     googleLogout();
+  };
+  const handleError = () => {
+    console.log("Login Failed");
   };
 
   const handleSuccess = async (credentialResponse: any) => {
     const decoded:UserType = await jwtDecode(credentialResponse?.credential);
     setInformation(decoded.email);
     setIsLoggedIn(true);
-    navigate("/decks", { state: { userEmail: decoded.email } });
+    setName(decoded.name);
   };
 
-  const handleError = () => {
-    console.log("Login Failed");
-  };
-
-  const handleGetId = async () => {
-    try {
-      const res = await fetch(server + "/", {
-        method: "GET",
-      });
-
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
+  const getAllUserEmails = async () => {
+    const check = await(await fetch(server + "/")).json()
+    let count = 0;
+    if(!check) return;
+    for(const obj of check){
+      if(information === obj.email_address){
+        count ++;
+        setUserId(obj.id);
       }
-
-      const jsonRes = await res.json();
-      setUserId(jsonRes);
-    } catch (error) {
-      console.error("Error fetching user:", error);
     }
-  };
+    if(count < 1){
+      createNewAccount();
+    }
+  }
+
+  const createNewAccount = async() => {
+    if(!information) return;
+    const customer: CreateCustomerType = {
+      email_address: information,
+    };
+    const request = await fetch(server + "/customers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(customer),
+    });
+    let final = await request.json();
+    setUserId(final.id);
+  }
 
   // const handleCreateNewUser = async (user: string) => {
   //   try {
@@ -101,8 +108,9 @@ function Login({}) {
                   alt="Profile"
                 />
               )}
-              <p>Name: {information?.name}</p>
-              <p>Email: {information?.email}</p>
+              <p>Name: {name}</p>
+              <p>Email: {information}</p>
+              <button onClick={() => navigate("/decks", { state: { userId: userId} })}>PROCEED</button>
               <button onClick={handleLogout}>Logout</button>
             </div>
           )}
