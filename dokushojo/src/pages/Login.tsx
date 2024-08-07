@@ -6,8 +6,8 @@ import {
 } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import { UserType } from "../src/interfaces/UserType";
-import { CreateCustomerType } from "../src/interfaces/CreateCustomerType";
+import { UserType } from "../interfaces/UserType";
+import { CreateCustomerType } from "../interfaces/CreateCustomerType";
 const clientId =
   "11471929898-7c74bgss3h1c1f4q13bas5isbo74edfs.apps.googleusercontent.com";
 // const server = "https://dokushojo-backend.onrender.com";

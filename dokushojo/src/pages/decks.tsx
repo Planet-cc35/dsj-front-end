@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import * as deckApi from "../src/api/deckApi";
+import * as deckApi from "../api/deckApi";
 const endPoint = import.meta.env.VITE_SERVER + `/decks`;
 
 import {
@@ -11,7 +11,7 @@ import {
   // Route,
   // Routes,
 } from "react-router-dom";
-import TableDeck from "../src/interfaces/TableDeck";
+import TableDeck from "../interfaces/TableDeck";
 
 interface BaseDeck {
   title: string;

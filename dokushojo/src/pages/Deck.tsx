@@ -119,7 +119,7 @@ const Deck = () => {
       <section className="d-flex flex-column z-0">
         <div className="container my-3">
           <div className="d-flex justify-content-between">
-            <h2 className="mb-3">Name of deck</h2>
+            <h2 className="mb-3">{props.deck.title}</h2>
             <button className="btn btn-dark" onClick={() => navigate("/decks") }>Close</button>
           </div>
           <div

@@ -49,6 +49,7 @@ const CardOverlay: React.FC<Props> = (props) => {
       text !== useLastBackText &&
       (text !== textareaBack.current.defaultValue || !useCurrentApiUrl)
     ) {
+      console.log("fetch");
       const audioUrl = voicerssApi.audioUrlBuilder(text);
       const apiAudioUrl = (await voicerssApi.fetchApiAudioUrl(audioUrl)).url;
       setLastBackText(text);
