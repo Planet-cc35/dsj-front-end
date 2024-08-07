@@ -1,11 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { UserType } from "../src/interfaces/UserType";
 
 import * as deckApi from "../src/api/deckApi";
 const endPoint = import.meta.env.VITE_SERVER + `/decks`;
-const userPoint = import.meta.env.VITE_SERVER;
+
 import {
   useNavigate,
   // Navigate,
@@ -13,7 +12,7 @@ import {
   // Route,
   // Routes,
 } from "react-router-dom";
-import EditDeckType from "../src/interfaces/EditDeckType";
+
 // import Card from "./Card";
 
 interface DeckDatabase extends BaseDeck {
