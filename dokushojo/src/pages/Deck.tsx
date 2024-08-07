@@ -4,7 +4,7 @@ import * as cardApi from "../api/cardApi";
 import DeckCardType from "../interfaces/DeckCardType";
 import CardOverlay from "./overlays/CardOverlay";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // TODO: update this to deck interface
 
@@ -14,7 +14,7 @@ const Deck = () => {
   const location = useLocation();
   const props = location.state
 
-
+  const navigate = useNavigate();
 
   const buttonShowAnswer = useRef<HTMLButtonElement>(null);
 
@@ -120,7 +120,7 @@ const Deck = () => {
         <div className="container my-3">
           <div className="d-flex justify-content-between">
             <h2 className="mb-3">Name of deck</h2>
-            <button className="btn btn-dark">Close</button>
+            <button className="btn btn-dark" onClick={() => navigate("/decks") }>Close</button>
           </div>
           <div
             className="d-flex-column text-center sticky-top border m-auto p-3 bg-light z-1 rounded"

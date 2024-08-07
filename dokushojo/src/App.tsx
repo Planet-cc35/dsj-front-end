@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Login from "../components/Login";
 import DeckList from "../components/decks";
 import Deck from "./pages/Deck";
@@ -9,28 +9,23 @@ function App() {
   const location = useLocation();
   // const isDojoPage = location.pathname === "/dojo";
   const isDeckPage = location.pathname === "/decks";
-
+  const navigate = useNavigate();
   return (
     <div className="container text-center mw-100 ">
       <div className="row vh-100">
         {/* {!isDojoPage && ( */}
         {!isDeckPage && (
-          <div className="col-9 pt-2">
-            <img
-              src="circle copiar.svg"
-              className="circle-image spin-image"
-              alt="Circle"
-            />
+          <div className="card">
+            
             <img
               src="Dokushojo.svg"
-              className="circle-image center-image"
+              className="m-auto"
               alt="Dokushojo"
+              width={500}
             />
-            <img
-              src="Dokushojo-title.svg"
-              className="circle-title center-title"
-              alt="Dokushojo"
-            />
+            <div className="button">
+              <button className="btn btn-primary" aria-label="Small button group" onClick={() => navigate("/login")}>Log In</button>
+            </div>
           </div>
         )}
 
