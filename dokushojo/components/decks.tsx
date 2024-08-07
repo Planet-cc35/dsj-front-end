@@ -41,10 +41,10 @@ const DeckList: React.FC<DeckListProps> = () => {
   useEffect(() => {
     async function fetchDecks() {
       const response = await fetch(
-        endPoint + `/decks/customers/${userId}`
+        userPoint + `/decks/customers/${userId}`
         // `https://dokushojo-backend.onrender.com/decks/users/${userId}`
       );
-      const data: Deck[] = await response.json(); // JSON data
+      const data: DeckDatabase[] = await response.json(); // JSON data
       setDecks(data);
     }
 
@@ -108,11 +108,11 @@ const DeckList: React.FC<DeckListProps> = () => {
       customer_id: userId,
       title: CreateDeckTitle,
     };
-    await fetch(endPoint + `/decks`, {
+    await fetch(endPoint, {
+      method: "POST",
       headers: {
         "Content-Type": "application/JSON",
       },
-      method: "POST",
       body: JSON.stringify(baseDeck),
     });
   };
