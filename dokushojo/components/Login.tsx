@@ -72,30 +72,11 @@ function Login({}) {
     setUserId(final.id);
   }
 
-  // const handleCreateNewUser = async (user: string) => {
-  //   try {
-  //     const response = await fetch(server + "/users", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(user),
-  //     });
-  //     if (!response.ok) {
-  //       throw new Error("Failed to create the new user");
-  //     }
-  //     setUserObject(user.user_id);
-  //     navigate("/dojo", { state: { user: information } });
-  //   } catch (error) {
-  //     console.error("Error creating user:", error);
-  //   }
-  // };
-
   return (
-    <>
+    <div className="card">
       <GoogleOAuthProvider clientId={clientId}>
-        <img src="/hello.svg" className="welcome-message" alt="Welcome" />
-        <div className="google-login-button">
+      <img width={500} src="Dokushojo.svg" className="m-auto" alt="Dokushojo"/>
+        <div className="m-auto">
           {!isLoggedIn ? (
             <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
           ) : (
@@ -110,8 +91,8 @@ function Login({}) {
               )}
               <p>Name: {name}</p>
               <p>Email: {information}</p>
-              <button onClick={() => navigate("/decks", { state: { userId: userId} })}>PROCEED</button>
-              <button onClick={handleLogout}>Logout</button>
+              <button className="btn btn-outline-primary" onClick={() => navigate("/decks", { state: { userId: userId} })}>Proceed</button>
+              <button className="btn btn-outline-secondary" onClick={handleLogout}>Logout</button>
             </div>
           )}
         </div>
@@ -122,7 +103,7 @@ function Login({}) {
           Click in case of emergency
         </button>
       </div>
-    </>
+    </div>
   );
 }
 
