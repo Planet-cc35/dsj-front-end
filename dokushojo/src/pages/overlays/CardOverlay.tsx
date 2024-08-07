@@ -1,10 +1,12 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TableDeck from "../../interfaces/TableDeck";
 import * as cardApi from "../../api/cardApi";
+import * as voicerssApi from "../../api/voicerssApi";
 import AddCardType from "../../interfaces/AddCardType";
 import DeckCardType from "../../interfaces/DeckCardType";
 import TableCardType from "../../interfaces/TableCardType";
 import BaseCardType from "../../interfaces/BaseCardType";
+import utils from "../../utils";
 
 interface Props {
   deck: TableDeck;
@@ -19,6 +21,41 @@ interface Props {
 const CardOverlay: React.FC<Props> = (props) => {
   const textareaFront = useRef<HTMLTextAreaElement>(null);
   const textareaBack = useRef<HTMLTextAreaElement>(null);
+
+  const [useLastBackText, setLastBackText] = useState<string | null>(null);
+  const [useCurrentApiUrl, setCurrentApiUrl] = useState<string | null>(null);
+  const [useIsButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!props.currentCard) return;
+    setCurrentApiUrl(props.currentCard.card.audio_url);
+  }, []);
+
+  const handlePlayClick = async () => {
+    setIsButtonDisabled(true);
+    if (!isValidInputs() || !textareaBack.current) {
+      setIsButtonDisabled(false);
+      return;
+    }
+    const apiAudioUrl = await handleSetCurrentApiUrl();
+    if (apiAudioUrl) utils.playAudio(apiAudioUrl);
+    setIsButtonDisabled(false);
+  };
+
+  const handleSetCurrentApiUrl = async () => {
+    if (!isValidInputs() || !textareaBack.current) return;
+    const text = textareaBack.current.value.trim();
+    if (
+      text !== useLastBackText &&
+      (text !== textareaBack.current.defaultValue || !useCurrentApiUrl)
+    ) {
+      const audioUrl = voicerssApi.audioUrlBuilder(text);
+      const apiAudioUrl = (await voicerssApi.fetchApiAudioUrl(audioUrl)).url;
+      setLastBackText(text);
+      setCurrentApiUrl(apiAudioUrl);
+      return apiAudioUrl;
+    } else return useCurrentApiUrl;
+  };
 
   const isValidInputs = () => {
     if (!textareaFront.current || !textareaBack.current) return;
@@ -36,10 +73,13 @@ const CardOverlay: React.FC<Props> = (props) => {
     if (!textareaFront.current || !textareaBack.current) return;
     if (!isValidInputs()) return;
 
+    handleSetCurrentApiUrl();
+
     const addCard: AddCardType = {
       deck_id: props.deck.id,
       front: textareaFront.current.value,
       back: textareaBack.current.value,
+      audio_url: useCurrentApiUrl,
     };
 
     const response = await cardApi.addCard(addCard);
@@ -53,9 +93,12 @@ const CardOverlay: React.FC<Props> = (props) => {
       return;
     if (!isValidInputs()) return;
 
+    handleSetCurrentApiUrl();
+
     const baseCard: BaseCardType = {
-      front: textareaFront.current.value,
-      back: textareaBack.current.value,
+      front: textareaFront.current.value.trim(),
+      back: textareaBack.current.value.trim(),
+      audio_url: useCurrentApiUrl,
     };
 
     const response = await cardApi.updateCard(
@@ -84,7 +127,7 @@ const CardOverlay: React.FC<Props> = (props) => {
             ? "Update Card " + (props.currentCard.index + 1)
             : "New Card"}
         </h2>
-        <div className="card-body d-flex-column gap-3">
+        <div className="card-body text-center">
           <p className="input-group">
             <span className="input-group-text bg-info-subtle">Front</span>
             <textarea
@@ -107,6 +150,15 @@ const CardOverlay: React.FC<Props> = (props) => {
               ref={textareaBack}
             ></textarea>
           </p>
+          <button
+            type="button"
+            className="btn btn-primary my-3 mt-0"
+            style={{ width: "100%" }}
+            onClick={handlePlayClick}
+            disabled={useIsButtonDisabled}
+          >
+            Test Audio
+          </button>
           <div className="d-flex btn-group">
             <button
               type="button"
@@ -121,6 +173,7 @@ const CardOverlay: React.FC<Props> = (props) => {
               type="button"
               className="btn btn-light"
               onClick={clearClick}
+              disabled={useIsButtonDisabled}
             >
               Clear
             </button>
