@@ -33,13 +33,12 @@ function App() {
             />
           </div>
         )}
-        <div className="col mx-auto pt-2">
-          <div className="mx-auto">
+       
             <Routes>
               <Route path="/" element={<Login />} />
             </Routes>
-          </div>
-        </div>
+       
+        
         <Routes>
           <Route path="/decks" element={<DeckList />} />
           {/* <Route path="/study" element={<Card />} /> */}
@@ -53,9 +52,11 @@ function App() {
 export default function AppWrapper() {
   return (
     <BrowserRouter>
-      <App />
-      {/* <Dojo/> */}
-      {/* <Deck /> */}
+      <Routes>
+        <Route path="/" element={<App/>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/decks" element={<DeckList />} />
+      </Routes>
     </BrowserRouter>
   );
 }

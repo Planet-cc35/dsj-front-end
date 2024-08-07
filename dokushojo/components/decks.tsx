@@ -2,6 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { UserType } from "../src/interfaces/UserType";
+
+import * as deckApi from "../src/api/deckApi";
 const endPoint = import.meta.env.VITE_SERVER + `/decks`;
 const userPoint = import.meta.env.VITE_SERVER;
 import {
@@ -11,9 +13,8 @@ import {
   // Route,
   // Routes,
 } from "react-router-dom";
+import EditDeckType from "../src/interfaces/EditDeckType";
 // import Card from "./Card";
-
-const endPoint = import.meta.env.VITE_SERVER + ``;
 
 interface DeckDatabase extends BaseDeck {
   created_at: Date;
@@ -49,17 +50,9 @@ const DeckList: React.FC<DeckListProps> = () => {
  
   // Use Effects GET ALL DECKS FROM USER ID
   useEffect(() => {
-    async function fetchDecks() {
-      const response = await fetch(
-        userPoint + `/decks/customers/${userId}`
-        // `https://dokushojo-backend.onrender.com/decks/users/${userId}`
-      );
-      const data: DeckDatabase[] = await response.json(); // JSON data
-      setDecks(data);
-    }
-
-    fetchDecks();
-  }, [userId]);
+    getAllDecks();
+    console.log("workering?")
+  }, []);
   
 
   
@@ -70,37 +63,24 @@ const DeckList: React.FC<DeckListProps> = () => {
     setNewTitle(deckTitle);
   };
   
-  const handleSaveEdit = async () => {
-    if (storeDeckId === null) return;
+  const getAllDecks = async() => {
+    const allDecksOfUser = await deckApi.fetchDecks(userId);
+    setDecks(allDecksOfUser);
+  }
 
-    const response = await fetch(
-      // `https://dokushojo-backend.onrender.com/decks/${storeDeckId}`,
-      endPoint + `/decks/${storeDeckId}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ deck_title: newTitle }),
-      }
-    );
-
-    if (response.ok) {
-      setDecks(
-        decks.map((deck) =>
-          deck.id === storeDeckId ? { ...deck, deck_title: newTitle } : deck
-        )
-      );
-      setStoreDeckId(null);
-      setNewTitle("");
-    } else {
-      console.error("Failed to update the deck.");
-    }
+  const submitEdit = async () => {
+    if(!storeDeckId || !newTitle) return;
+    const response = await deckApi.editDeckName(storeDeckId, newTitle);
+    const currentDecksWithoutEditedDeck = decks.filter((deck: DeckDatabase ) => deck.id !== response.id);
+    setDecks([response, ...currentDecksWithoutEditedDeck]);
+    setStoreDeckId(null);
+    setNewTitle("");
+    
   };
 
   const handleDelete = async (deckId: number) => {
     const response = await fetch(
-      endPoint + `/decks/${deckId}`,
+      endPoint + `/${deckId}`,
       // `https://dokushojo-backend.onrender.com/decks/${deckId}`,
       {
         method: "DELETE",
@@ -118,18 +98,18 @@ const DeckList: React.FC<DeckListProps> = () => {
       customer_id: userId,
       title: CreateDeckTitle,
     };
-    await fetch(endPoint, {
+    const send = await fetch(endPoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/JSON",
       },
       body: JSON.stringify(baseDeck),
     });
+    const response = await(send).json();
+    setDecks([response, ...decks]);
   };
-  const handleGetDeck = async (DeckId: number) => {
-    const response = await fetch(endPoint + `/cards/decks/${DeckId}`);
-    const data: CardDatabase[] = await response.json();
-    setGetDeck(data);
+  const handleGetDeck = async(deckId: number) => {
+    
   };
 
   return (
@@ -156,7 +136,7 @@ const DeckList: React.FC<DeckListProps> = () => {
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
                   />
-                  <button onClick={handleSaveEdit}>Save</button>
+                  <button onClick={submitEdit}>Save</button>
                   <button
                     onClick={() => {
                       setStoreDeckId(null);
@@ -177,10 +157,7 @@ const DeckList: React.FC<DeckListProps> = () => {
                       <Route path="/study" element={<Card/ studyCards=getDeck>}>
                     </Routes> */}
                     <button
-                      onClick={() => {
-                        handleGetDeck(deck.id);
-                        navigate(`/study/${deck.id}`, { state: { getDeck } });
-                      }}
+                      
                     >
                       Study
                     </button>
