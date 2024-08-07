@@ -3,16 +3,18 @@ import CardComponent from "../components/Card";
 import * as cardApi from "../api/cardApi";
 import DeckCardType from "../interfaces/DeckCardType";
 import CardOverlay from "./overlays/CardOverlay";
-import TableDeck from "../interfaces/TableDeck";
+
+import { useLocation } from "react-router-dom";
 
 // TODO: update this to deck interface
-interface Props {
-  deck: TableDeck;
-}
 
-const Deck: React.FC<Props> = (props) => {
+
+const Deck = () => {
   //TODO remove this
-  props = { deck: { id: 1 } };
+  const location = useLocation();
+  const props = location.state
+
+
 
   const buttonShowAnswer = useRef<HTMLButtonElement>(null);
 
