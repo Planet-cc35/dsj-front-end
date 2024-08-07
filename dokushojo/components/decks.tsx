@@ -31,11 +31,9 @@ const DeckList = () => {
   // Use Effects GET ALL DECKS FROM USER ID
   useEffect(() => {
     getAllDecks();
-    console.log("workering?");
   }, []);
 
   // Handler Functions
-
   const handleEdit = (deckId: number, deckTitle: string) => {
     setStoreDeckId(deckId);
     setNewTitle(deckTitle);
@@ -112,15 +110,15 @@ const DeckList = () => {
             />
             <button onClick={handleCreate} className="btn btn-success mx-3">
               + New Deck
-            </button>
+            </button>{" "}
           </div>
         </div>
       </div>
-      <div className="d-flex justify-content-center m-3">
+      <div className="d-flex justify-content-center m-5">
         {decks.length ? (
           <div className="card-container">
             {decks.map((deck) => (
-              <div className="card" key={deck.id}>
+              <div className="card mb-4" key={deck.id}>
                 {storeDeckId === deck.id ? (
                   <div className="card-body">
                     <input
@@ -129,9 +127,7 @@ const DeckList = () => {
                       value={newTitle}
                       onChange={(e) => setNewTitle(e.target.value)}
                     />
-                    <button className="btn btn-primary" onClick={submitEdit}>
-                      Save
-                    </button>
+                    <button onClick={submitEdit}>Save</button>
                     <button
                       className="btn btn-dark"
                       onClick={() => {
@@ -143,22 +139,35 @@ const DeckList = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="card-body">
-                    <h3 className="card-title">{deck.title}</h3>
-                    <div className="card-actions">
-                      <button
-                        className="btn btn-info"
-                        onClick={() => handleEdit(deck.id, deck.title)}
-                      >
-                        Edit
-                      </button>
-                      {/* <Routes>
+                  <div className="card">
+                    <div
+                      className="card-body"
+                      style={{ minWidth: "300px", padding: "15px" }}
+                    >
+                      <h3 className="card-title">{deck.title}</h3>
+                      <div className="card-actions d-flex justify-content-between">
+                        <button
+                          className="btn btn-info"
+                          onClick={() => handleEdit(deck.id, deck.title)}
+                        >
+                          Edit
+                        </button>
+                        {/* <Routes>
                       <Route path="/study" element={<Card/ studyCards=getDeck>}>
                     </Routes> */}
-                      <button onClick={() => handleGetDeck(deck)}>Study</button>
-                      <button onClick={() => handleDelete(deck.id)}>
-                        Delete
-                      </button>
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => handleGetDeck(deck)}
+                        >
+                          Study
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDelete(deck.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -166,20 +175,18 @@ const DeckList = () => {
             ))}
           </div>
         ) : (
-          <p>No decks found</p>
+          <p className="fw-bold">No decks found. Add your Deck.</p>
         )}
       </div>
     </div>
   );
 };
 
-{
-  /* export default DeckList;
-// export default function DeckListWrapper() {}
+export default DeckList;
+// export default function DeckListWrapper() {
 //   return (
 //     <BrowserRouter>
 //       <DeckList />
 //     </BrowserRouter>
 //   );
-// } */
-}
+// }
