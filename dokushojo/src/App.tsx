@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Login from "../components/Login";
 import DeckList from "../components/decks";
 import Deck from "./pages/Deck";
@@ -16,7 +22,6 @@ function App() {
         {/* {!isDojoPage && ( */}
         {!isDeckPage && (
           <div className="card">
-            
             <img
               src="Dokushojo.svg"
               className="m-auto"
@@ -24,12 +29,16 @@ function App() {
               width={500}
             />
             <div className="button">
-              <button className="btn btn-primary" aria-label="Small button group" onClick={() => navigate("/login")}>Log In</button>
+              <button
+                className="btn btn-primary"
+                aria-label="Small button group"
+                onClick={() => navigate("/login")}
+              >
+                Log In
+              </button>
             </div>
           </div>
         )}
-
-
 
         <Routes>
           <Route path="/decks" element={<DeckList />} />
@@ -48,7 +57,7 @@ export default function AppWrapper() {
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/decks" element={<DeckList />} />
-        <Route path="/deck" element={<Deck />} />
+        <Route path="/study" element={<Deck />} />
       </Routes>
     </BrowserRouter>
   );
