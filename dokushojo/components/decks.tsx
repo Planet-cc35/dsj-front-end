@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -12,41 +11,23 @@ import {
   // Route,
   // Routes,
 } from "react-router-dom";
+import TableDeck from "../src/interfaces/TableDeck";
 
-// import Card from "./Card";
-
-interface DeckDatabase extends BaseDeck {
-  created_at: Date;
-  // customer_id: number;
-  id: number;
-  // title: string;
-  updated_at: Date;
-}
-interface CardDatabase {
-  id: number;
-  deck_id: number;
-  front: string;
-  back: string;
-  created_at: Date;
-  updated_at: Date;
-  audio_url: null;
-}
-interface DeckListProps {}
 interface BaseDeck {
   title: string;
   customer_id: number;
 }
 
-const DeckList: React.FC<DeckListProps> = () => {
+const DeckList = () => {
   const navigate = useNavigate();
-  const [decks, setDecks] = useState<DeckDatabase[]>([]); //state to store the deck data
+  const [decks, setDecks] = useState<TableDeck[]>([]); //state to store the deck data
   const [storeDeckId, setStoreDeckId] = useState<number | null>(null); //state to store the deck id
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
   const [CreateDeckTitle, setCreateDeckTitle] = useState(""); // states to add new card
   
   const location = useLocation();
   const userId = location.state.userId;
- 
+  
   // Use Effects GET ALL DECKS FROM USER ID
   useEffect(() => {
     getAllDecks();
@@ -70,7 +51,7 @@ const DeckList: React.FC<DeckListProps> = () => {
   const submitEdit = async () => {
     if(!storeDeckId || !newTitle) return;
     const response = await deckApi.editDeckName(storeDeckId, newTitle);
-    const currentDecksWithoutEditedDeck = decks.filter((deck: DeckDatabase ) => deck.id !== response.id);
+    const currentDecksWithoutEditedDeck = decks.filter((deck: TableDeck ) => deck.id !== response.id);
     setDecks([response, ...currentDecksWithoutEditedDeck]);
     setStoreDeckId(null);
     setNewTitle("");
@@ -106,9 +87,10 @@ const DeckList: React.FC<DeckListProps> = () => {
     });
     const response = await(send).json();
     setDecks([response, ...decks]);
+    setCreateDeckTitle("");
   };
-  const handleGetDeck = async(deckId: number) => {
-    
+  const handleGetDeck = async(deck: TableDeck) => {
+    navigate("/study", { state: {deck} })
   };
 
   return (
@@ -155,9 +137,7 @@ const DeckList: React.FC<DeckListProps> = () => {
                     {/* <Routes>
                       <Route path="/study" element={<Card/ studyCards=getDeck>}>
                     </Routes> */}
-                    <button
-                      
-                    >
+                    <button onClick={() => handleGetDeck(deck)}>
                       Study
                     </button>
                     <button onClick={() => handleDelete(deck.id)}>
