@@ -127,7 +127,9 @@ const DeckList = () => {
                       value={newTitle}
                       onChange={(e) => setNewTitle(e.target.value)}
                     />
-                    <button onClick={submitEdit}>Save</button>
+                    <button className="btn btn-primary" onClick={submitEdit}>
+                      Save
+                    </button>
                     <button
                       className="btn btn-dark"
                       onClick={() => {
