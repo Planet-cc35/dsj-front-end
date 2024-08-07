@@ -4,7 +4,7 @@ import * as cardApi from "../api/cardApi";
 import DeckCardType from "../interfaces/DeckCardType";
 import CardOverlay from "./overlays/CardOverlay";
 
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // TODO: update this to deck interface
 
