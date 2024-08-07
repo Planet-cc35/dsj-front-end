@@ -104,6 +104,7 @@ const DeckList = () => {
           onChange={(e) => setCreateDeckTitle(e.target.value)}
         />
         <button onClick={handleCreate}>Create a new Deck</button>
+        <button onClick={() => navigate("/login")}>Log out</button>
       </div>
       {decks.length ? (
         <div className="card-container">
