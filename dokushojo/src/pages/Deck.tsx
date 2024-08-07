@@ -5,7 +5,6 @@ import DeckCardType from "../interfaces/DeckCardType";
 import CardOverlay from "./overlays/CardOverlay";
 import TableDeck from "../interfaces/TableDeck";
 
-// TODO: update this to deck interface
 interface Props {
   deck: TableDeck;
 }

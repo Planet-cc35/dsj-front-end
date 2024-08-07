@@ -15,7 +15,7 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
   const [newAudio, setNewAudio] = useState<any | null>(null);
   const [title, setTitle] = useState<string | undefined>(cardData.card_title);
   const [body, setBody] = useState<string>(cardData.card_body);
-  const [btnView, setbtnView] = useState<string>("newCard");
+  const [btnView, setBtnView] = useState<string>("newCard");
 
   function randomVoice(): string {
     const voices: string[] = ["Airi", "Fumi", "Akira"];
@@ -44,7 +44,7 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
         audio: newAudio,
       };
       setSpeechObject(editCardData);
-      setbtnView("editView");
+      setBtnView("editView");
     }
   }, [newAudio, title, body]);
 
@@ -76,7 +76,7 @@ const EditCard: React.FC<EditCardProps> = ({ setCardView, cardData }) => {
   };
 
   function handleReturn(): void {
-    setbtnView("newCard");
+    setBtnView("newCard");
   }
 
   const audioTest = () => {

@@ -107,6 +107,7 @@ const CardOverlay: React.FC<Props> = (props) => {
               ref={textareaBack}
             ></textarea>
           </p>
+          <button className="btn btn-primary">Test Audio</button>
           <div className="d-flex btn-group">
             <button
               type="button"

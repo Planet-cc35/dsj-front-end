@@ -1,4 +1,5 @@
 import DeckCardType from "../interfaces/DeckCardType";
+import utils from "../utils";
 
 interface Props {
   card: DeckCardType;
@@ -8,13 +9,20 @@ interface Props {
 }
 
 const CardComponent: React.FC<Props> = (props) => {
+  const handlePlayClick = () => {
+    utils.playAudio(props.card.audio_url);
+  };
+
   return (
     <div
       className={`btn card text-white p-0 border-3 ${
         props.card.isSelected ? "bg-primary" : "bg-secondary"
       }`}
       style={{ width: "200px", height: "170px" }}
-      onClick={() => props.selectCardClick(props.card, props.index)}
+      onClick={() => {
+        props.selectCardClick(props.card, props.index);
+        handlePlayClick();
+      }}
     >
       <div className="card-header text-center">{props.index + 1}</div>
       <div
