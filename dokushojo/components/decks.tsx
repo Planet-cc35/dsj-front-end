@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate, BrowserRouter, Route, Routes } from "react-router-dom";
+// import { useNavigate, BrowserRouter, Route, Routes } from "react-router-dom";
 
 const endPoint = import.meta.env.VITE_SERVER + ``;
 
@@ -27,7 +27,7 @@ interface BaseDeck {
 }
 
 const DeckList: React.FC<DeckListProps> = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [decks, setDecks] = useState<DeckDatabase[]>([]); //state to store the deck data
   const [storeDeckId, setStoreDeckId] = useState<number | null>(null); //state to store the deck id
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
