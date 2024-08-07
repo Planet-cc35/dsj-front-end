@@ -5,8 +5,8 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import Login from "../components/Login";
-import DeckList from "../components/decks";
+import Login from "./pages/Login";
+import DeckList from "./pages/Decks";
 import Deck from "./pages/Deck";
 // import Card from "../components/Card";
 // import Dojo from "./Dojo";
@@ -39,12 +39,6 @@ function App() {
             </div>
           </div>
         )}
-
-        <Routes>
-          <Route path="/decks" element={<DeckList />} />
-          {/* <Route path="/study" element={<Card />} /> */}
-          {/* <Route path="/dojo" element={<Dojo />} /> */}
-        </Routes>
       </div>
     </div>
   );
@@ -54,7 +48,7 @@ export default function AppWrapper() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="*" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/decks" element={<DeckList />} />
         <Route path="/study" element={<Deck />} />
