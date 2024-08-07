@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes, useLocation, useNavigate } from "react-ro
 import Login from "../components/Login";
 import DeckList from "../components/decks";
 import Deck from "./pages/Deck";
-// import Deck from "./pages/Deck";
 // import Card from "../components/Card";
 // import Dojo from "./Dojo";
 
@@ -29,6 +28,14 @@ function App() {
             </div>
           </div>
         )}
+
+
+
+        <Routes>
+          <Route path="/decks" element={<DeckList />} />
+          {/* <Route path="/study" element={<Card />} /> */}
+          {/* <Route path="/dojo" element={<Dojo />} /> */}
+        </Routes>
       </div>
     </div>
   );
@@ -38,10 +45,10 @@ export default function AppWrapper() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App/>} />
+        <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/decks" element={<DeckList />} />
-        <Route path="/study" element={<Deck />} />
+        <Route path="/deck" element={<Deck />} />
       </Routes>
     </BrowserRouter>
   );
