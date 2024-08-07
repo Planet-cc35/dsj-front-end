@@ -1,8 +1,10 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Login from "../components/Login";
-// import Dojo from "./Dojo";
-import Deck from "./Deck";
 import DeckList from "../components/decks";
+import Deck from "./pages/Deck";
+// import Deck from "./pages/Deck";
+// import Card from "../components/Card";
+// import Dojo from "./Dojo";
 
 function App() {
   const location = useLocation();
@@ -32,17 +34,6 @@ function App() {
             />
           </div>
         )}
-        <div className="col mx-auto pt-2">
-          <div className="mx-auto">
-            <Routes>
-              <Route path="/" element={<Login />} />
-            </Routes>
-          </div>
-        </div>
-        <Routes>
-          <Route path="/decks" element={<DeckList />} />
-          {/* <Route path="/dojo" element={<Dojo />} /> */}
-        </Routes>
       </div>
     </div>
   );
@@ -51,9 +42,12 @@ function App() {
 export default function AppWrapper() {
   return (
     <BrowserRouter>
-      {/* <App /> */}
-      {/* <Dojo/> */}
-      <Deck><Deck/>
+      <Routes>
+        <Route path="/" element={<App/>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/decks" element={<DeckList />} />
+        <Route path="/study" element={<Deck />} />
+      </Routes>
     </BrowserRouter>
   );
 }
