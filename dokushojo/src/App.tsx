@@ -29,9 +29,7 @@ function App() {
           </div>
         )}
 
-        <Routes>
-          <Route path="/" element={<Login />} />
-        </Routes>
+
 
         <Routes>
           <Route path="/decks" element={<DeckList />} />
