@@ -6,7 +6,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import Login from "./pages/Login";
-import DeckList from "./pages/decks";
+import DeckList from "./pages/Decks";
 import Deck from "./pages/Deck";
 // import Card from "../components/Card";
 // import Dojo from "./Dojo";
