@@ -44,7 +44,7 @@ export default function AppWrapper() {
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/decks" element={<DeckList />} />
-        <Route path="/deck" element={<Deck />} />
+        <Route path="/deck" Component={Deck} />
       </Routes>
     </BrowserRouter>
   );
