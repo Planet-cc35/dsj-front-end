@@ -1,8 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
-// import { useNavigate, BrowserRouter, Route, Routes } from "react-router-dom";
-
-const endPoint = import.meta.env.VITE_SERVER + ``;
+import { useLocation } from "react-router-dom";
+import { UserType } from "../src/interfaces/UserType";
+const endPoint = import.meta.env.VITE_SERVER + `/decks`;
+const userPoint = import.meta.env.VITE_SERVER;
 
 interface DeckDatabase extends BaseDeck {
   created_at: Date;
@@ -32,9 +33,10 @@ const DeckList: React.FC<DeckListProps> = () => {
   const [storeDeckId, setStoreDeckId] = useState<number | null>(null); //state to store the deck id
   const [newTitle, setNewTitle] = useState(""); //state for new title - edit button
   const [CreateDeckTitle, setCreateDeckTitle] = useState(""); // states to add new card
-  const [getDeck, setGetDeck] = useState({});
-  const userId = 1;
-
+  
+  const location = useLocation();
+  const userId = location.state.userId;
+ 
   // Use Effects GET ALL DECKS FROM USER ID
   useEffect(() => {
     async function fetchDecks() {
@@ -42,19 +44,22 @@ const DeckList: React.FC<DeckListProps> = () => {
         endPoint + `/decks/customers/${userId}`
         // `https://dokushojo-backend.onrender.com/decks/users/${userId}`
       );
-      const data: DeckDatabase[] = await response.json(); // JSON data
+      const data: Deck[] = await response.json(); // JSON data
       setDecks(data);
     }
 
     fetchDecks();
   }, [userId]);
+  
+
+  
 
   // Handler Functions
   const handleEdit = (deckId: number, deckTitle: string) => {
     setStoreDeckId(deckId);
     setNewTitle(deckTitle);
   };
-
+  
   const handleSaveEdit = async () => {
     if (storeDeckId === null) return;
 
