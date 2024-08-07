@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Login from "../components/Login";
-import Deck from "./pages/Deck";
 import DeckList from "../components/decks";
-// import Dojo from "./Dojo";
+// import Deck from "./pages/Deck";
 // import Card from "../components/Card";
+// import Dojo from "./Dojo";
 
 function App() {
   const location = useLocation();
